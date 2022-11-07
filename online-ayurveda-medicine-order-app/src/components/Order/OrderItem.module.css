@@ -1,0 +1,40 @@
+.item{
+    margin: 1rem;
+    width: 40rem;
+}
+
+.item-details{
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.item-details .id{
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.id h4{
+    font-size: 1.5rem;
+}
+
+.info{
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info-price{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.info-status{
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: white;
+}

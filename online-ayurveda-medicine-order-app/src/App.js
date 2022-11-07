@@ -3,6 +3,7 @@ import AdminLogin from "./components/Admin/AdminLogin";
 import CustomerLogin from "./components/Customer/CustomerLogin";
 import Admin from "./components/Admin/Admin";
 import MainHeader from "./components/Layout/MainHeader";
+import Orders from "./components/Order/Orders";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <div className="App">
         <MainHeader />
         <Routes>
+          <Route path="/my-orders" element={<Orders />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/customer/login" element={<CustomerLogin />} />
