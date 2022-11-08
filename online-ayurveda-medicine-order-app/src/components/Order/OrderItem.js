@@ -40,8 +40,8 @@ const OrderItem = (props) => {
           </div>
         </div>
         <div className={classes["item-dates"]}>
-          <span>{props.orderDate}</span>
-          <span>{props.dispatchDate}</span>
+          <span>Order date: {props.orderDate}</span>
+          <span>Dispatch date: {props.dispatchDate}</span>
         </div>
       </Card>
     </li>

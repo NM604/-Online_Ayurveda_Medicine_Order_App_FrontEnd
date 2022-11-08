@@ -7,30 +7,29 @@ const MainHeader = () => {
     <header className={classes.header}>
       <nav>
         <div className={classes.brand}>
-          <NavLink activeClassName={classes.active} to="/">
+          <NavLink to="/">
             <h2>Ayurveda</h2>
           </NavLink>
         </div>
         <div>
           <ul>
             <li>
-                <NavLink activeClassName={classes.active} to="/medicines">
+              <NavLink to="/medicines">
                 Medicines
               </NavLink>
-              
             </li>
             <li>
-              <NavLink activeClassName={classes.active} to="/cart">
+              <NavLink to="/cart">
                 Cart
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName={classes.active} to="/my-orders">
+              <NavLink to="/my-orders">
                 MyOrders
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName={classes.active} to="/profile">
+              <NavLink to="/profile">
                 Profile
               </NavLink>
             </li>

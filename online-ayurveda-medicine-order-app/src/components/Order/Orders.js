@@ -5,6 +5,7 @@ import classes from './Orders.module.css';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [error,setError] =useState({});
   useEffect(() => {
     fetchData();
   }, []);
@@ -16,13 +17,14 @@ const Orders = () => {
       const orderItems = await data.data;
       setOrders(orderItems);
     } catch (err) {
-      console.log(err);
+      setError(err);
     }
   };
   return (
       <section className={classes.order}>
         <h3>Your Orders</h3>
-        <ul>
+        {error && <h1>{error.message}</h1>}
+        {orders && <ul>
           {orders.map((order) => (
             <OrderItem
               key={order.orderDetailId}
@@ -33,7 +35,8 @@ const Orders = () => {
               dispatchDate={order.dispatchDate}
             />
           ))}
-        </ul>
+        </ul>}
+        
       </section>
   );
 };
