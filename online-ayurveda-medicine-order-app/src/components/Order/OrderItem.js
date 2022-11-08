@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../UI/Card";
 import classes from "./OrderItem.module.css";
+import { Link } from "react-router-dom";
 const OrderItem = (props) => {
   let bg = "";
   switch (props.status) {
@@ -27,7 +28,7 @@ const OrderItem = (props) => {
           </div>
           <div className={classes.info}>
             <div className={classes["info-price"]}>
-              &#x20B9;{props.cost.toFixed(2)}
+              &#x20B9;{props.cost}
             </div>
             <div
               style={{
@@ -42,6 +43,11 @@ const OrderItem = (props) => {
         <div className={classes["item-dates"]}>
           <span>Order date: {props.orderDate}</span>
           <span>Dispatch date: {props.dispatchDate}</span>
+        </div>
+        <div>
+          <Link to={`/my-orders/${props.id}`}> 
+          <span>Show details</span>
+          </Link>
         </div>
       </Card>
     </li>
