@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../CSS/login.css";
 import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/auth";
 
 function CustomerLogin() {
   const initialValues = {
@@ -14,9 +16,13 @@ function CustomerLogin() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [response, setResponse] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.isAuth);
 
   useEffect(() => {
-    console.log(response);
+    if (auth) {
+      navigate("/customer");
+    }
   }, [response]);
 
   const handleChange = (e) => {
@@ -28,6 +34,7 @@ function CustomerLogin() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     backendValidate();
+    dispatch(authActions.login());
     setIsSubmit(true);
   };
 
@@ -35,6 +42,7 @@ function CustomerLogin() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     registerCustomer();
+    dispatch(authActions.login());
     setIsSubmit(true);
   };
 
@@ -43,7 +51,7 @@ function CustomerLogin() {
       .post("/oam/userinterface/customers", formValues)
       .then((response) => {
         setResponse(response.data);
-        navigate("/");
+        navigate("/customer");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);
@@ -55,7 +63,7 @@ function CustomerLogin() {
       .post("/oam/userinterface/customers/validate", formValues)
       .then((response) => {
         setResponse(response.data);
-        navigate("/");
+        navigate("/customer");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);

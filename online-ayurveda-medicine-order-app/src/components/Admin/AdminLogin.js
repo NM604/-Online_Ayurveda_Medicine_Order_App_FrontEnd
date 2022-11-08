@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../CSS/login.css";
 import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/auth";
 
 function AdminLogin() {
   const initialValues = { id: 0, password: "" };
@@ -10,9 +12,13 @@ function AdminLogin() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [response, setResponse] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.isAuth);
 
   useEffect(() => {
-    console.log(response);
+    if (auth) {
+      navigate("/admin");
+    }
   }, [response]);
 
   const handleChange = (e) => {
@@ -24,6 +30,7 @@ function AdminLogin() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     backendValidate();
+    dispatch(authActions.login());
     setIsSubmit(true);
   };
 
@@ -31,6 +38,7 @@ function AdminLogin() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     registerAdmin();
+    dispatch(authActions.login());
     setIsSubmit(true);
   };
 
@@ -39,7 +47,7 @@ function AdminLogin() {
       .post("/oam/administrator/admin", formValues)
       .then((response) => {
         setResponse(response.data);
-        navigate("/");
+        navigate("/admin");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);
@@ -51,7 +59,7 @@ function AdminLogin() {
       .post("/oam/administrator/adminvalidate", formValues)
       .then((response) => {
         setResponse(response.data);
-        navigate("/");
+        navigate("/admin");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);
