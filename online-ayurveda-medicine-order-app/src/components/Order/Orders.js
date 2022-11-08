@@ -2,8 +2,14 @@ import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import OrderItem from "./OrderItem";
 import classes from './Orders.module.css';
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/auth";
 
 const Orders = () => {
+  // const dispatch =useDispatch();
+  // const auth =useSelector(state=>state.auth.isAuth)
+  // console.log(auth);
+  // dispatch(authActions.login())
   const [orders, setOrders] = useState([]);
   const [error,setError] =useState({});
   useEffect(() => {
