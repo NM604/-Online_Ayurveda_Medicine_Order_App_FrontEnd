@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "../../CSS/login.css";
+import backendAPI from "../../apis/backendAPI";
+import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
-  const initialValues = { username: "", email: "", password: "" };
+  const initialValues = { id: 0, password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [response, setResponse] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(response);
+  }, [response]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,19 +23,46 @@ function AdminLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
+    backendValidate();
     setIsSubmit(true);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    registerAdmin();
+    setIsSubmit(true);
+  };
+
+  const registerAdmin = async () => {
+    const data = await backendAPI
+      .post("/oam/administrator/admin", formValues)
+      .then((response) => {
+        setResponse(response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        setResponse(error.response.data.errorMessage);
+      });
+  };
+
+  const backendValidate = async () => {
+    const data = await backendAPI
+      .post("/oam/administrator/adminvalidate", formValues)
+      .then((response) => {
+        setResponse(response.data);
+        navigate("/");
+      })
+      .catch((error) => {
+        setResponse(error.response.data.errorMessage);
+      });
   };
 
   const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.username) {
-      errors.username = "Username is required!";
-    }
-    if (!values.email) {
-      errors.email = "Email is required!";
-    } else if (!regex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
+    if (!values.id) {
+      errors.id = "ID is required!";
     }
     if (!values.password) {
       errors.password = "Password is required";
@@ -42,37 +77,26 @@ function AdminLogin() {
   return (
     <div className="container">
       {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message success">Signed in successfully</div>
+        <div className="ui message success">{response}</div>
       ) : (
-        <pre>{JSON.stringify(formValues, undefined, 2)}</pre>
+        <pre>{response}</pre>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <h1>Login Form</h1>
         <div className="ui divider"></div>
         <div className="ui form">
           <div className="field">
-            <label>Username</label>
+            <label>ID</label>
             <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formValues.username}
+              type="number"
+              name="id"
+              placeholder="id"
+              value={formValues.id}
               onChange={handleChange}
             />
           </div>
-          <p>{formErrors.username}</p>
-          <div className="field">
-            <label>Email</label>
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={formValues.email}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.email}</p>
+          <p>{formErrors.id}</p>
           <div className="field">
             <label>Password</label>
             <input
@@ -84,7 +108,15 @@ function AdminLogin() {
             />
           </div>
           <p>{formErrors.password}</p>
-          <button className="fluid ui button blue">Submit</button>
+          <button className="fluid ui button blue" onClick={handleSubmit}>
+            Submit
+          </button>
+        </div>
+        <div className="field">
+          <p>Forgot password</p>
+          <button className="fluid ui button blue" onClick={handleClick}>
+            Sign Up as Admin
+          </button>
         </div>
       </form>
     </div>
