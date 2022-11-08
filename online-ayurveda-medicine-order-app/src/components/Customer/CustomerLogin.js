@@ -4,6 +4,7 @@ import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
+import { save } from "../../store/cred";
 
 function CustomerLogin() {
   const initialValues = {
@@ -18,6 +19,7 @@ function CustomerLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.isAuth);
+  const id = useSelector((state) => state.userId);
 
   useEffect(() => {
     if (auth) {
@@ -35,6 +37,7 @@ function CustomerLogin() {
     setFormErrors(validate(formValues));
     backendValidate();
     dispatch(authActions.login());
+    dispatch(save(formValues.id));
     setIsSubmit(true);
   };
 
@@ -43,6 +46,7 @@ function CustomerLogin() {
     setFormErrors(validate(formValues));
     registerCustomer();
     dispatch(authActions.login());
+    dispatch(save(formValues.id));
     setIsSubmit(true);
   };
 

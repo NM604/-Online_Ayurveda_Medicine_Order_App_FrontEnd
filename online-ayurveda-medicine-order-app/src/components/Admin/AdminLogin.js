@@ -4,6 +4,7 @@ import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
+import { save } from "../../store/cred";
 
 function AdminLogin() {
   const initialValues = { id: 0, password: "" };
@@ -14,6 +15,7 @@ function AdminLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.isAuth);
+  const id = useSelector((state) => state.userId);
 
   useEffect(() => {
     if (auth) {
@@ -31,6 +33,7 @@ function AdminLogin() {
     setFormErrors(validate(formValues));
     backendValidate();
     dispatch(authActions.login());
+    dispatch(save(formValues.id));
     setIsSubmit(true);
   };
 
@@ -39,6 +42,7 @@ function AdminLogin() {
     setFormErrors(validate(formValues));
     registerAdmin();
     dispatch(authActions.login());
+    dispatch(save(formValues.id));
     setIsSubmit(true);
   };
 

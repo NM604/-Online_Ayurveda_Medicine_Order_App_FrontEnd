@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 
 function Admin() {
   const auth = useSelector((state) => state.auth.isAuth);
+  const id = useSelector((state) => state.userId);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -18,6 +19,7 @@ function Admin() {
   const handleUpdatePassword = () => {};
 
   console.log(auth);
+  console.log(id);
   return (
     <div className="container">
       <h1>Management Services</h1>
