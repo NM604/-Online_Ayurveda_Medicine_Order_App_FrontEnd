@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import AdminLogin from "./components/Admin/AdminLogin";
 import CustomerLogin from "./components/Customer/CustomerLogin";
 import Admin from "./components/Admin/Admin";
 import MainHeader from "./components/Layout/MainHeader";
 import Orders from "./components/Order/Orders";
-import OrderItemDetails from "./components/Order/OrderProductDetails";
-import MedicineListing from "./components/MedicineListing";
-import CartProducts from "./components/Cart/CartProducts";
-import { useDispatch, useSelector } from "react-redux";
-
-import {authActions} from './store/auth'
+import CustomerDetails from "./components/Customer/CustomerDetails";
+import Dashboard from "./components/Dashboard";
+import WelcomePage from "./components/Layout/WelcomePage";
 
 function App() {
   return (
@@ -17,13 +17,13 @@ function App() {
       <div className="App">
         <MainHeader />
         <Routes>
-          <Route path="/medicines" element={<MedicineListing />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/my-orders" element={<Orders />} />
-          <Route path="/cart" element={<CartProducts />} />
-          <Route path="/my-orders/:id" element={<OrderItemDetails/>} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/customer/login" element={<CustomerLogin />} />
+          <Route path="/customer" element={<CustomerDetails />} />
         </Routes>
       </div>
     </Router>

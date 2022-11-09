@@ -10,7 +10,7 @@ const credSlice = createSlice({
   reducers: {
     save: (state, param) => {
       state.userId = param.payload;
-      console.log(state.userId);
+      localStorage.setItem("isLoggedIn", "1");
     },
   },
 });

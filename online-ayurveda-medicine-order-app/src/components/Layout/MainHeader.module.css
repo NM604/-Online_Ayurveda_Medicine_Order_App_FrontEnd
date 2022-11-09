@@ -1,5 +1,5 @@
 .header {
-    height: 5rem;
+    height: 80px;
     background-color: #044599;
     padding: 0 10%;
     
@@ -11,6 +11,7 @@
   
   .header nav {
     display: flex;
+    height: 80px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
