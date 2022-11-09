@@ -3,9 +3,9 @@ import axios from "axios";
 import OrderItem from "./OrderItem";
 import classes from "./Orders.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/auth";
+import { authActions } from "../../../store/auth";
 import Table from "react-bootstrap/Table";
-import ErrorCard from "../UI/ErrorCard";
+import ErrorCard from "../../UI/ErrorCard";
 
 
 const Orders = () => {
