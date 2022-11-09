@@ -1,0 +1,15 @@
+.error{
+    margin-top: 10%;
+    background-color: rgb(190, 31, 31);
+    color: white;
+    width: 20rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.error span{
+    font-size: 1.1rem;
+    text-align: center;
+}

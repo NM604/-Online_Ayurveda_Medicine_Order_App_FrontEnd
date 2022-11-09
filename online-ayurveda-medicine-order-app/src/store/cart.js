@@ -10,11 +10,63 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       const cartItem = action.payload;
-      state.cartItems.push(cartItem);
+      let isDuplicate = false;
+      state.cartItems = state.cartItems.map((item) => {
+        if (item.medicineId === cartItem.medicineId) {
+          isDuplicate = true;
+          const netqty= +(item.quantity) + +(cartItem.quantity)
+          item.quantity = netqty;
+        }
+        return item
+      });
+      if (!isDuplicate) {
+        state.cartItems.unshift(cartItem);
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems) );
     },
-    clearCart(state){
-      state.cartItems=[];
-    }
+    removeItem(state, action) {
+      const filtered = state.cartItems.filter(
+        (item) => item.medicineId != action.payload
+      );
+      state.cartItems = filtered;
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems) );
+
+    },
+    increaseQuantity(state,action) {
+      const medicineId = action.payload;
+      state.cartItems = state.cartItems.map((item) => {
+        if (item.medicineId === medicineId) {
+          const netqty= +(item.quantity) + 1
+          item.quantity = netqty;
+        }
+        return item
+      });
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems) );
+
+    },
+    decreaseQuantity(state,action) {
+      const medicineId = action.payload;
+      state.cartItems = state.cartItems.filter(item=>{
+        if (item.medicineId === medicineId && item.quantity===1){
+          return false;
+        }
+        return true;
+      })
+      state.cartItems = state.cartItems.map((item) => {
+        if (item.medicineId === medicineId) {
+          const netqty= +(item.quantity) - 1
+          item.quantity = netqty;
+        }
+        return item
+      });
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems) );
+
+    },
+    clearCart(state) {
+      state.cartItems = [];
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems) );
+
+    },
   },
 });
 

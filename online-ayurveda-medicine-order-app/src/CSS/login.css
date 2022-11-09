@@ -26,15 +26,3 @@ body {
     border-radius: 5px;
     background: #fff;
   }
-  pre {
-    width: 70%;
-    color: #fff;
-    font-size: larger;
-  }
-  
-  button {
-    background: #0563b4 !important;
-  }
-  p {
-    color: red;
-  }

@@ -4,27 +4,39 @@ import Card from "../UI/Card";
 import CartProductItem from "./CartProductItem";
 import axios from "axios";
 import { cartActions } from "../../store/cart";
-
+import classes from "./CartProducts.module.css";
+import Table from "react-bootstrap/Table";
+import CheckoutCard from "./CheckoutCard";
 const CartProducts = () => {
+  //console.log(localStorage.getItem("cartItems"));
+  const localStorageCart = JSON.parse(
+    localStorage.getItem("cartItems") || "[]"
+  );
+  console.log(localStorageCart);
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
-  console.log(cartItems);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
+    updateTotalPrice();
+  }, []);
+
+  useEffect(() => {
+    updateTotalPrice();
+  }, [localStorageCart]);
+
+  const updateTotalPrice = () => {
     let sum = 0;
-    cartItems.map((item) => {
+    localStorageCart.map((item) => {
       sum += item.price * item.quantity;
     });
     setTotalPrice(sum);
-  }, []);
-
-  const formatDate =(date)=>{
-    return date.toISOString().split("T")[0]
-  }
+  };
+  const formatDate = (date) => {
+    return date.toISOString().split("T")[0];
+  };
 
   const orderHandler = () => {
-
     let ordDate = new Date();
     let disDate = new Date();
     disDate.setDate(disDate.getDate() + 7);
@@ -42,8 +54,11 @@ const CartProducts = () => {
 
     (async () => {
       //const orderDetailId = await postOrderDetail(orderDetailItem);
-      const orderDetailId = await postData("http://localhost:8080/oam/order-details",orderDetailItem);
-      cartItems.map((item) => {
+      const orderDetailId = await postData(
+        "http://localhost:8080/oam/order-details",
+        orderDetailItem
+      );
+      localStorageCart.map((item) => {
         const orderItem = {
           medicine: {
             medicineId: item.medicineId,
@@ -56,7 +71,7 @@ const CartProducts = () => {
         };
 
         //postOrderItem(orderItem);
-        postData("http://localhost:8080/oam/order-items",orderItem);
+        postData("http://localhost:8080/oam/order-items", orderItem);
       });
     })();
 
@@ -64,60 +79,57 @@ const CartProducts = () => {
     setTotalPrice(0);
   };
 
-  const postData =async (url,data)=>{
+  const postData = async (url, data) => {
     try {
-      const res = await axios.post(
-        url,
-        data
-      );
+      const res = await axios.post(url, data);
       const id = await res.data;
       return id;
     } catch (e) {
       console.log(e);
     }
-  }
-
-  // const postOrderDetail = async (orderDetailItem) => {
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:8080/oam/order-details",
-  //       orderDetailItem
-  //     );
-  //     const id = await res.data;
-  //     return id;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // const postOrderItem = async (orderItem) => {
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:8080/oam/order-items",
-  //       orderItem
-  //     );
-  //     console.log(res.data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
+  };
 
   return (
-    <div>
-      <h1>Your Cart</h1>
-      <h2>Total Price is {totalPrice}</h2>
-      <button onClick={orderHandler}>Place Order</button>
-      <ul>
-        {cartItems.map((item) => (
-          <CartProductItem
-            medicineId={item.medicineId}
-            medicineName={item.medicineName}
-            quantity={item.quantity}
-            price={item.price}
-          />
-        ))}
-      </ul>
+    <div className={classes["cart-container"]}>
+      <div className={classes["cart-header"]}>
+        <h1>My shopping cart</h1>
+      </div>
+      <div className={classes["cart-body"]}>
+        <div className={classes["cart-items"]}>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Medicine id</th>
+                <th>Medicine name</th>
+                <th>quantity</th>
+                <th>price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {localStorageCart.length === 0 && (
+                <tr>
+                  <td colSpan="4">
+                    <h4>Your cart is empty</h4>
+                  </td>
+                </tr>
+              )}
+              {localStorageCart.map((item) => (
+                <CartProductItem
+                  key={item.medicineId}
+                  medicineId={item.medicineId}
+                  medicineName={item.medicineName}
+                  quantity={item.quantity}
+                  price={item.price}
+                />
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        <div className={classes["cart-price"]}>
+          <CheckoutCard totalPrice={totalPrice} />
+        </div>
+      </div>
     </div>
   );
 };

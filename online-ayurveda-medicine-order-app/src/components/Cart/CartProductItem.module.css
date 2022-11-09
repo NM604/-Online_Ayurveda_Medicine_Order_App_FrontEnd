@@ -1,0 +1,14 @@
+.medicine-qty{
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.medicine-qty button{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding-top: 0;
+}
+.medicine-qty span{
+    font-weight: bold;
+}

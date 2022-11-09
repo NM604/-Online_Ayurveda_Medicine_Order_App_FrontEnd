@@ -44,8 +44,8 @@ const MedicineListing = () => {
           price: medicineCost,
         };
         return (
-          <Card>
-            <div key={medicineId}>
+          <Card key={medicineId}>
+            <div >
               <h1>{medicineName}</h1>
               <h2>{companyName}</h2>
               <h2>{medicineCost}</h2>

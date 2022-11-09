@@ -1,5 +1,5 @@
 
-.order-container{
+.order-product-container{
     padding: 1rem;
     margin: 2rem;
     display: flex;
@@ -7,18 +7,18 @@
     align-items: center;
     justify-content: center;
 }
-.order-header{
+.order-product-header{
     font-size: 1.5rem;
     width: 100%;
     text-align: left;
     margin-left:30% ;
 }
 
-.order-items{
+.order-product-items{
     width: 70%;
     margin: 0 50%;
 }
-.order-items th, .order-items td {
+.order-product-items th,.order-product-items tr,.order-items td {
     text-align:center;
  
 }
