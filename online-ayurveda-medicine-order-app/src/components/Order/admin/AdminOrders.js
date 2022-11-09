@@ -3,10 +3,13 @@ import axios from "axios";
 import AdminOrderItem from "./AdminOrderItem";
 import { getSuggestedQuery } from "@testing-library/react";
 import classes from "./AdminOrders.module.css";
+import Table from "react-bootstrap/Table";
+import AdminOrderTable from "./AdminOrderTable";
+import ErrorCard from "../../UI/ErrorCard";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
-  const [error, setError] = useState({});
+  const [error, setError] = useState();
   const [sq, setsq] = useState("");
   useEffect(() => {
     if (filter == "Select Filter") {
@@ -50,11 +53,12 @@ const AdminOrders = () => {
   }
 
   return (
-    <section className={classes.order}>
+    <section className={classes["admin-order-container"]}>
       <h3>All Orders</h3>
       {error && <h1>{error.message}</h1>}
-      {orders && (
-        <ul>
+      {error && <ErrorCard />}
+      {!error && (
+        <div className={classes["admin-order-items"]}>
           <div>
             <select value={filter} onChange={(e) => setfilter(e.target.value)}>
               <option>Select Filter</option>
@@ -70,21 +74,43 @@ const AdminOrders = () => {
               onKeyUp={(e) => filterData(e.target.value)}
             />
           </div>
-          {orders.map((order) => (
-            <AdminOrderItem
-              key={order.orderDetailId}
-              id={order.orderDetailId}
-              cost={order.totalCost}
-              status={order.orderStatus}
-              orderDate={order.orderDate}
-              dispatchDate={order.dispatchDate}
-              customerId={order.customer.customerId}
-              customer={order.customer}
-              // customerId={order.customerId}
-              fetchData={fetchData}
-            />
-          ))}
-        </ul>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Order id</th>
+                <th>Order date</th>
+                <th>Dispatch date</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Customer id</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan="4">
+                    <h4>Your order is empty</h4>
+                  </td>
+                </tr>
+              )}
+              {orders.map((order) => (
+                <AdminOrderItem
+                  key={order.orderDetailId}
+                  id={order.orderDetailId}
+                  cost={order.totalCost}
+                  status={order.orderStatus}
+                  orderDate={order.orderDate}
+                  dispatchDate={order.dispatchDate}
+                  customerId={order.customer.customerId}
+                  customer={order.customer}
+                  // customerId={order.customerId}
+                  fetchData={fetchData}
+                />
+              ))}
+            </tbody>
+          </Table>
+        </div>
       )}
     </section>
   );
