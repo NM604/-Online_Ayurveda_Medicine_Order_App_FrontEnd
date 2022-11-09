@@ -33,13 +33,13 @@ const CustomerDetails = () => {
 
   useEffect(() => {
     const storedUserLoggedInfo = localStorage.getItem("isLoggedIn");
+    setUserId(localStorage.getItem("loggedId"));
     if (storedUserLoggedInfo === "0") {
       navigate("/customer/login");
     }
-    setUserId(localStorage.getItem("loggedId"));
-    console.log(userId);
+    //setUserId(localStorage.getItem("loggedId"));
     fetchCustomerDetails();
-  }, []);
+  }, [userId]);
 
   const handleDelete = async () => {
     const data = await backendAPI

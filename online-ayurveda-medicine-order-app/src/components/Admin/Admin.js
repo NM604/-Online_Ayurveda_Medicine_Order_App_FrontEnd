@@ -8,11 +8,16 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import UpdateUtil from "./UpdateUtil";
 import "../../CSS/admin.css";
+import backendAPI from "../../apis/backendAPI";
 
 function Admin() {
+  const initialValues = { id: 0, password: "" };
+  const [formValues, setFormValues] = useState(initialValues);
   const auth = useSelector((state) => state.auth.isAuth);
   const id = useSelector((state) => state.userId);
   const [open, setOpen] = useState(false);
+  const [response, setResponse] = useState();
+  const [userId, setUserId] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,20 +26,54 @@ function Admin() {
     if (storedUserLoggedInfo === "0") {
       navigate("/admin/login");
     }
-  }, []);
+    setUserId(localStorage.getItem("loggedId"));
+    fetchAdminDetails();
+  }, [userId]);
+
+  const fetchAdminDetails = async () => {
+    const data = await backendAPI
+      .get(`/oam/administrator/admin/${userId}`)
+      .then((res) => {
+        setFormValues(res.data);
+      })
+      .catch((error) => {
+        setResponse(error.response.data.errorMessage);
+      });
+  };
 
   const handleLogout = async () => {
     dispatch(authActions.logout());
     navigate("/admin/login");
   };
 
-  const handleUpdatePassword = () => {};
+  const handleDelete = async () => {
+    const data = await backendAPI
+      .delete(`/oam/administrator/admin/${userId}`)
+      .then((response) => {
+        setResponse(response.data);
+        dispatch(authActions.logout());
+        navigate("/admin/login");
+      })
+      .catch((error) => {
+        setResponse(error.response.data.errorMessage);
+      });
+  };
 
-  console.log(auth);
-  console.log(id);
+  //console.log(auth);
+  //console.log(id);
+
   return (
     <div className="container-3">
       <h1>Management Services</h1>
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Card.Title>Profile Details</Card.Title>
+          <Card.Text>
+            <p>Admin ID: {formValues.id}</p>
+            <p>Password: {formValues.password}</p>
+          </Card.Text>
+        </Card.Body>
+      </Card>
       <Card style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Title>Medicine Management</Card.Title>
@@ -87,6 +126,9 @@ function Admin() {
           <UpdateUtil />
         </div>
       </Collapse>
+      <Button variant="danger" onClick={handleDelete}>
+        Delete Account
+      </Button>
       <Button variant="danger" onClick={handleLogout}>
         Logout
       </Button>
