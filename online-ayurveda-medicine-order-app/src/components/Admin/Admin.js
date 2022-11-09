@@ -64,74 +64,110 @@ function Admin() {
 
   return (
     <div className="container-3">
-      <h1>Management Services</h1>
-      <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Card.Title>Profile Details</Card.Title>
-          <Card.Text>
-            <p>Admin ID: {formValues.id}</p>
-            <p>Password: {formValues.password}</p>
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Card.Title>Medicine Management</Card.Title>
-          <Card.Text>
-            Perform management on medicine store. For example, adding new
-            medicines, deleting medicine out of stock or updating details for
-            any medicine.
-          </Card.Text>
-          <Button variant="primary" onClick={() => navigate("/managemeds")}>
-            Click
+      <h3>Management Services</h3>
+      <div className="item-1">
+        <Card style={{ width: "18rem" }}>
+          <Card.Body>
+            <Card.Title>Profile Details</Card.Title>
+            <Card.Text>
+              <p>Admin ID: {formValues.id}</p>
+              <p>Password: {formValues.password}</p>
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <div className="buttons">
+          <Button
+            variant="warning"
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+          >
+            Update Password
           </Button>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Card.Title>Order Management</Card.Title>
-          <Card.Text>
-            Perform management on existing orders. For example, updating order
-            details.
-          </Card.Text>
-          <Button variant="primary" onClick={() => navigate("/manageorders")}>
-            Click
-          </Button>
-        </Card.Body>
-      </Card>
-      <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Card.Title>Customer Management</Card.Title>
-          <Card.Text>
-            Perform management on existing customers. For example, deleting
-            fraudulent customer accounts.
-          </Card.Text>
-          <Button variant="primary" onClick={() => navigate("/managecustomer")}>
-            Click
-          </Button>
-        </Card.Body>
-      </Card>
-      <div className="buttons">
-        <Button
-          variant="warning"
-          onClick={() => setOpen(!open)}
-          aria-controls="example-collapse-text"
-          aria-expanded={open}
-        >
-          Update Password
-        </Button>
-      </div>
-      <Collapse in={open}>
-        <div id="example-collapse-text">
-          <UpdateUtil />
         </div>
-      </Collapse>
-      <Button variant="danger" onClick={handleDelete}>
-        Delete Account
-      </Button>
-      <Button variant="danger" onClick={handleLogout}>
-        Logout
-      </Button>
+        <Collapse in={open}>
+          <div id="example-collapse-text">
+            <UpdateUtil />
+          </div>
+        </Collapse>
+        <div className="buttons">
+          <Button variant="danger" onClick={handleDelete}>
+            Delete Account
+          </Button>
+        </div>
+        <div className="buttons">
+          <Button variant="danger" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
+      </div>
+      <div className="items">
+        <div className="item">
+          <Card style={{ width: "25rem", height: "500px" }}>
+            <Card.Img
+              className="photo"
+              variant="top"
+              src={require("./first.jpeg")}
+            />
+            <Card.Body>
+              <Card.Title>Medicine Management</Card.Title>
+              <Card.Text>
+                Perform management on medicine store. For example, adding new
+                medicines, deleting medicine out of stock or updating details
+                for any medicine.
+              </Card.Text>
+              <Button variant="primary" onClick={() => navigate("/managemeds")}>
+                Click
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="item">
+          <Card style={{ width: "25rem", height: "500px" }}>
+            <Card.Img
+              className="photo"
+              variant="top"
+              src={require("./second.jpeg")}
+            />
+            <Card.Body>
+              <Card.Title>Order Management</Card.Title>
+              <Card.Text>
+                Perform management on existing orders. For example, updating
+                order details.
+              </Card.Text>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/manageorders")}
+              >
+                Click
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+        <div className="item">
+          <Card style={{ width: "25rem", height: "500px" }}>
+            <Card.Img
+              className="photo"
+              variant="top"
+              src={require("./third.jpeg")}
+            />
+            <Card.Body>
+              <Card.Title>Customer Management</Card.Title>
+              <Card.Text>
+                Perform management on existing customers. For example, deleting
+                fraudulent customer accounts.
+              </Card.Text>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/managecustomer")}
+              >
+                Click
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+      </div>
+      <div className="item-1"></div>
     </div>
   );
 }

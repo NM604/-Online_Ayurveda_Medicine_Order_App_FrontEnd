@@ -1,6 +1,47 @@
+body{
+    position: relative;
+}
+
 .container-3{
-    display: inline-flex;
-    justify-content: space-between;
+    width: 100%;
+    display:block;
+}
+
+.container-3 .item-1{
+    margin: 25px 25px 25px 25px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    margin:20px;
+}
+
+.container-3 .items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-3 .item{
+    margin: 25px 25px 25px 25px;
+}
+
+.container-3 h3{
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+.container-3 .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-3 .buttons{
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+.photo{
+    height: 250px;
+    width: 200px;
 }
