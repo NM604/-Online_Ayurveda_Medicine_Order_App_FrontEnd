@@ -4,12 +4,13 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 import { cartActions } from "../../store/cart";
 import { useDispatch, useSelector } from "react-redux";
-import classes from './CheckoutCard.module.css'
+import classes from "./CheckoutCard.module.css";
 
 function CheckoutCard(props) {
-    const localStorageCart = JSON.parse(
-        localStorage.getItem("cartItems") || "[]"
-      );
+  const custId = localStorage.getItem("loggedId");
+  const localStorageCart = JSON.parse(
+    localStorage.getItem("cartItems") || "[]"
+  );
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -27,7 +28,6 @@ function CheckoutCard(props) {
     });
     setTotalPrice(sum);
   };
-  
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
@@ -41,7 +41,7 @@ function CheckoutCard(props) {
 
     const orderDetailItem = {
       customer: {
-        customerId: 1,
+        customerId: custId,
       },
       dispatchDate: disDate,
       orderDate: ordDate,
@@ -49,7 +49,6 @@ function CheckoutCard(props) {
     };
 
     (async () => {
-      //const orderDetailId = await postOrderDetail(orderDetailItem);
       const orderDetailId = await postData(
         "http://localhost:8080/oam/order-details",
         orderDetailItem
@@ -86,7 +85,7 @@ function CheckoutCard(props) {
 
   return (
     <Card className={classes.card}>
-      <Card.Body className={classes['card-body']}>
+      <Card.Body className={classes["card-body"]}>
         <Card.Title>Order Summary</Card.Title>
         <Card.Text>Total Price :{totalPrice}</Card.Text>
         <Button variant="primary" onClick={orderHandler}>

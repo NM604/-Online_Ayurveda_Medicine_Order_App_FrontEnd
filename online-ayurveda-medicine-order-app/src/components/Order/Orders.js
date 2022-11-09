@@ -9,18 +9,20 @@ import ErrorCard from "../UI/ErrorCard";
 
 
 const Orders = () => {
+  const custId = localStorage.getItem("loggedId");
   const [orders, setOrders] = useState([]);
-  const [error, setError] = useState({});
+  const [error, setError] = useState();
   useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
     try {
       const data = await axios.get(
-        "http://localhost:8080/oam/order-details/customer/1"
+        `http://localhost:8080/oam/order-details/customer/${custId}`
       );
       const orderItems = await data.data;
       setOrders(orderItems);
+      setError();
     } catch (err) {
       setError(err);
     }

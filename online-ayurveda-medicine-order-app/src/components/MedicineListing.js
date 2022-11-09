@@ -16,7 +16,6 @@ const MedicineListing = () => {
         "http://localhost:8080/oam/userinterface/medicine"
       );
       setMedicines(response.data);
-      console.log(response);
     } catch (err) {
       setError(err);
     }
@@ -52,7 +51,6 @@ const MedicineListing = () => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  console.log('Submitted');
                   cartHandler(medItem);
                 }}
               >

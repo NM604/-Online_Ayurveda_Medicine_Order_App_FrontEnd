@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import AdminLogin from "./components/Admin/AdminLogin";
 import CustomerLogin from "./components/Customer/CustomerLogin";
@@ -25,6 +24,7 @@ function App() {
         <MainHeader />
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/medicines" element={<MedicineListing />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/my-orders" element={<Orders />} />
           <Route path="/cart" element={<CartProducts />} />
