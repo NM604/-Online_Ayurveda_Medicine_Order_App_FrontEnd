@@ -60,7 +60,7 @@ function CustomerUpdateUtil() {
   return (
     <Form>
       <h2>
-        Login or Signup <Badge bg="success">Customer</Badge>
+        Change Password <Badge bg="success">Customer</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
         <Form.Label>Customer ID</Form.Label>

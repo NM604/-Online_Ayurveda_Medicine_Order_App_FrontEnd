@@ -63,7 +63,7 @@ function CustomerLoginUtil() {
       .then((response) => {
         setResponse(response.data);
         dispatch(authActions.login());
-        dispatch(save(formValues.id));
+        dispatch(save(formValues.customerId));
         navigate("/welcome");
       })
       .catch((error) => {
@@ -77,7 +77,7 @@ function CustomerLoginUtil() {
       .then((response) => {
         setResponse(response.data);
         dispatch(authActions.login());
-        dispatch(save(formValues.id));
+        dispatch(save(formValues.customerId));
         navigate("/welcome");
       })
       .catch((error) => {
