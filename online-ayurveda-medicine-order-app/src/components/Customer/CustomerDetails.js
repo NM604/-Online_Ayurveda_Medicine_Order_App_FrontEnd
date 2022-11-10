@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import CustomerUpdateUtil from "./CustomerUpdateUtil";
 import backendAPI from "../../apis/backendAPI";
+import "../../CSS/profile.css";
 
 const CustomerDetails = () => {
   const [CustomerDetails, setCustomerDetails] = useState({});
@@ -23,9 +24,6 @@ const CustomerDetails = () => {
       .then((res) => {
         console.log(res);
         setCustomerDetails(res.data);
-      })
-      .catch((error) => {
-        setResponse(error.response.data.errorMessage);
       });
   };
 
@@ -58,15 +56,16 @@ const CustomerDetails = () => {
   };
 
   return (
-    <div className="container">
-      <div key={CustomerDetails.customerId}>
-        <h1>Customer Details</h1>
-        <p>ID : {CustomerDetails.customerId}</p>
-        <p>Name : {CustomerDetails.customerName}</p>
-        <p>Password : {CustomerDetails.customerPassword}</p>
+    <div className="container" >
+      <div key={CustomerDetails.customerId} className="cust">
+        <h1>Customer Details
+        </h1><br/>
+        <h5 className="details">ID : {CustomerDetails.customerId}</h5>
+        <h5 className="details">Name : {CustomerDetails.customerName}</h5>
+        <h5 className="details">Password : {CustomerDetails.customerPassword}</h5>
       </div>
 
-      <Button variant="danger" onClick={handleDelete}>
+      <Button variant="danger" onClick={handleDelete} id="btn">
         Delete Account
       </Button>
       <div className="buttons">
@@ -75,6 +74,7 @@ const CustomerDetails = () => {
           onClick={() => setOpen(!open)}
           aria-controls="example-collapse-text"
           aria-expanded={open}
+          id="btn1"
         >
           Update Password
         </Button>
@@ -84,7 +84,7 @@ const CustomerDetails = () => {
           <CustomerUpdateUtil />
         </div>
       </Collapse>
-      <Button variant="danger" onClick={handleLogout}>
+      <Button variant="primary" onClick={handleLogout} id="btn2">
         Logout
       </Button>
     </div>
