@@ -56,7 +56,7 @@ const CustomerDetails = () => {
   };
 
   return (
-    <div className="container" >
+    <div className="container" id="con">
       <div key={CustomerDetails.customerId} className="cust">
         <h1>Customer Details
         </h1><br/>
