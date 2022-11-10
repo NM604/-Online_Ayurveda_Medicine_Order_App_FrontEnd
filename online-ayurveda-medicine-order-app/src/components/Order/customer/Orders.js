@@ -30,7 +30,7 @@ const Orders = () => {
   return (
     <section className={classes["order-container"]}>
       <div className={classes["order-header"]}>
-        <h1>Your Orders</h1>
+        <h1>My Orders</h1>
       </div>
       {error && <ErrorCard/>}
       {!error && (

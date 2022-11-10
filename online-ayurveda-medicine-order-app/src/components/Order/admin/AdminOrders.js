@@ -4,7 +4,6 @@ import AdminOrderItem from "./AdminOrderItem";
 import { getSuggestedQuery } from "@testing-library/react";
 import classes from "./AdminOrders.module.css";
 import Table from "react-bootstrap/Table";
-import AdminOrderTable from "./AdminOrderTable";
 import ErrorCard from "../../UI/ErrorCard";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";

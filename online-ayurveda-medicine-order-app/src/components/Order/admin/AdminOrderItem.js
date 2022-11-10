@@ -38,7 +38,7 @@ const AdminOrderItem = (props) => {
       <td>
         <div
           style={{
-            border:"1px solid",
+            border: "1px solid",
             borderColor: `${bg}`,
             color: `${bg}`,
           }}
@@ -49,10 +49,36 @@ const AdminOrderItem = (props) => {
       </td>
       <td>{props.customerId}</td>
       <td>
-        <Button variant="primary" onClick={() => setButtonPopup(true)}>
+        <Button
+          variant="primary"
+          className={classes["info-status"]}
+          onClick={() => setButtonPopup(true)}
+        >
+          {" "}
           UPDATE ORDER
         </Button>
-        <Popup prop={props} trigger={buttonPopup} setTrigger={setButtonPopup} />
+        {/* <button
+          className={classes["info-status"]}
+          style={{ color: "white" }}
+          onClick={() => setButtonPopup(true)}
+        >
+          {" "}
+          UPDATE ORDER
+        </button> */}
+        {buttonPopup ? (
+          <Popup
+            prop={props}
+            trigger={buttonPopup}
+            setTrigger={setButtonPopup}
+          />
+        ) : (
+          ""
+        )}
+
+        {/* <Button variant="primary" clas onClick={() => setButtonPopup(true)}>
+          UPDATE ORDER
+        </Button>
+        <Popup prop={props} trigger={buttonPopup} setTrigger={setButtonPopup} /> */}
       </td>
     </tr>
   );

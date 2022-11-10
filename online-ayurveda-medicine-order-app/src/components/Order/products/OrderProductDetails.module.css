@@ -22,3 +22,8 @@
     text-align:center;
  
 }
+
+.order-product-items th{
+    font-weight: bold;
+    font-size: 16px;
+}

@@ -1,7 +1,7 @@
 
 .order-container{
     padding: 1rem;
-    margin: 2rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,9 +9,8 @@
 }
 .order-header{
     font-size: 1.5rem;
-    width: 100%;
-    text-align: left;
-    margin-left:30% ;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .order-items{

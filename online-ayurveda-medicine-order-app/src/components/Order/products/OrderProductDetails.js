@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import OrderProductDetailItem from "./OrderProductDetailItem";
 import classes from "./OrderProductDetails.module.css";
-import Table from 'react-bootstrap/Table';
+//import Table from 'react-bootstrap/Table';
+
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const OrderProductDetails = () => {
   const [orderItem, setOrderItem] = useState([]);
@@ -22,7 +30,7 @@ const OrderProductDetails = () => {
     let totPrice = 0;
     orderItem.map((item) => {
       totQty += item.quantity;
-      totPrice += item.quantity*item.price;
+      totPrice += item.quantity * item.price;
     });
     setProductSummary({
       totalQuantity: totQty,
@@ -42,35 +50,54 @@ const OrderProductDetails = () => {
   };
   console.log(orderItem);
   return (
-    <section className={classes["order-product-container"]}>
+    <section
+      data-testid="section"
+      className={classes["order-product-container"]}
+    >
       <div className={classes["order-product-header"]}>
-        <h1>Ordered Products</h1>
+        <h1 data-testid="header">Ordered Products</h1>
       </div>
       <div className={classes["order-product-items"]}>
-      <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Medicine name</th>
-              <th>Quantity</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderItem.map((item) => (
-              <OrderProductDetailItem
-                key={item.orderItemId}
-                medineName={item.medicine.medicineName}
-                quantity={item.quantity}
-                price={item.price}
-              />
-            ))}
-            <tr>
-              <td></td>
-              <td>Total Qty: {productSummary.totalQuantity}</td>
-              <td>Total price: {productSummary.totalPrice}</td>
-            </tr>
-          </tbody>
-        </Table>
+        <TableContainer sx={{ minWidth: 500, maxWidth: 600 }} component={Paper}>
+          <Table
+            stickyHeader
+            sx={{ minWidth: 500, maxWidth: 600 }}
+            aria-label="spanning table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Medicine name</TableCell>
+                <TableCell align="center">Qty.</TableCell>
+                <TableCell align="center">Unit price</TableCell>
+                <TableCell align="center">Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orderItem.map((item) => (
+                <TableRow key={item.orderItemId}>
+                  <TableCell align="center">
+                    {item.medicine.medicineName}
+                  </TableCell>
+                  <TableCell align="center">{item.quantity}</TableCell>
+                  <TableCell align="center">{item.price}</TableCell>
+                  <TableCell align="center">15</TableCell>
+                </TableRow>
+              ))}
+
+              <TableRow>
+                <TableCell rowSpan={3} />
+                <TableCell colSpan={2}>Net Qty</TableCell>
+                <TableCell align="center">
+                  {productSummary.totalQuantity}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={2}>Net price</TableCell>
+                <TableCell align="center">{productSummary.totalPrice}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </section>
   );

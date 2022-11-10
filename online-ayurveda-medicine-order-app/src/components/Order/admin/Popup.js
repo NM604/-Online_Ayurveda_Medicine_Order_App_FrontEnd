@@ -1,15 +1,12 @@
-
-
-
-
-import { Axios, AxiosError } from 'axios'
-import React from 'react'
-import './Popup.css'
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { json } from 'react-router-dom'
+import { Axios, AxiosError } from "axios";
+import React from "react";
+import "./Popup.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { json } from "react-router-dom";
 
 function Popup(props) {
+  console.log(props);
   // const [data, setData] = useState({
   //   id: '',
   //   dispatchDate: '',
@@ -18,17 +15,17 @@ function Popup(props) {
   //   cost: '',
   // });
 
-  const [orders, setOrders] = useState([])
-  const [error, setError] = useState({})
+  const [orders, setOrders] = useState([]);
+  const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     id: props.prop.id,
     dispatchDate: props.prop.dispatchDate,
     orderDate: props.prop.orderDate,
     orderStatus: props.prop.status,
-    cost: props.prop.cost,
+    cost: parseInt(props.prop.cost),
     customerId: props.prop.customerId,
     // customerId: props.prop.customerId
-  })
+  });
 
   // const body = {
   //   id: formData.id,
@@ -40,23 +37,21 @@ function Popup(props) {
   // }
 
   function onChange(e) {
-    let name = e.target.name
-    let value = e.target.value
-    let formObj = { ...formData }
-    setFormData({ ...formData, [name]: value })
-    console.log(formData)
+    let name = e.target.name;
+    let value = e.target.value;
+    let formObj = { ...formData };
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
   }
 
-
-  const body={
-                orderDetailId: formData.orderDetailId,
-                dispatchDate: formData.dispatchDate,
-                orderDate: formData.orderDate,
-                orderStatus: formData.orderStatus,
-                totalCost: formData.totalCost,
-                customer: props.prop.customer
-              }
-
+  // const body = {
+  //   orderDetailId: formData.orderDetailId,
+  //   dispatchDate: formData.dispatchDate,
+  //   orderDate: formData.orderDate,
+  //   orderStatus: formData.orderStatus,
+  //   totalCost: formData.totalCost,
+  //   customer: props.prop.customer,
+  // }
 
   // const submitHandler = () => {
   //   updateStatus();
@@ -66,7 +61,7 @@ function Popup(props) {
   //   try {
   //     const data = await axios.put(
   //       `http://localhost:8080/oam/order-details`,formData
-        
+
   //     );
   //     // const orderItems = await data.data;
   //     console.log(formData);
@@ -76,7 +71,6 @@ function Popup(props) {
   // };
   // const submitHandler = (e) => {
 
-   
   //   // setFormErrors(validate(formValues));
   //   updateOrder();
   // };
@@ -92,52 +86,68 @@ function Popup(props) {
   //       setOrders(error.orders.data.errorMessage);
   //     });
   // };
-// const updateMedicine= async (medicineId)=>{
-//   try{
-//     const res=await axios.put(``,)
-//   }
-// }
+  // const updateMedicine= async (medicineId)=>{
+  //   try{
+  //     const res=await axios.put(``,)
+  //   }
+  // }
 
+  async function submitHandler() {
+    console.log(formData);
+    console.log('data');
+    const putData = {
+      orderDetailId: formData.id,
+      orderDate: formData.orderDate,
+      dispatchDate: formData.dispatchDate,
+      orderStatus: formData.orderStatus,
+      totalCost: formData.cost,
+      customer: {
+        customerId: props.prop.customerId,
+        customerName: props.prop.customerName,
+        customerPassword: props.prop.customerPassword,
+      },
+    };
+    console.log(putData);
 
+    try {
+      const data = await axios.put(
+        `http://localhost:8080/oam/order-details`,
+        putData
+      );
+      const orderItems = await data.data;
+      console.log(orderItems);
+      props.setTrigger(false);
+      props.prop.fetchData();
+      // let res = await fetch("http://localhost:8080/oam/order-details", {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     orderDetailId: formData.id,
+      //     orderDate: formData.orderDate,
+      //     dispatchDate: formData.dispatchDate,
+      //     orderStatus: formData.orderStatus,
+      //     totalCost: formData.totalCost,
+      //     customer: {
+      //       customerId: props.prop.customerId,
+      //       customerName: props.prop.customerName,
+      //       customerPassword: props.prop.customerPassword,
+      //     },
+      //   }),
+      // });
 
-
-
-
-
-
-  async function submitHandler(e) {
-    console.log('kkkkk')
-    let res = await fetch(
-      `http://localhost:8080/oam/order-details`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"},
-          body: JSON.stringify(
-            {
-              orderDetailId: formData.orderDetailId,
-              dispatchDate: formData.dispatchDate,
-              orderDate: formData.orderDate,
-              orderStatus: formData.orderStatus,
-              totalCost: formData.totalCost,
-              customer: props.prop.customer
-            }
-          )
-      })
-      let resJson = res.json()
-
-    console.log(resJson, 'RESSSSSSSSSSSSSSSSSS')
-    if (res.status == 200) {
-      props.setTrigger(false)
-      props.fetchData()
-    } else {
+      // if (res.status == 200) {
+      //   props.setTrigger(false);
+      //   props.prop.fetchData();
+      // } else {
+      // }
+      // console.log(res.data);
+    } catch (error) {
+      console.log(error);
     }
   }
-
-
-
-
-  return props.trigger ? (
+  return (
     <div
       className="popup"
       // style={{position:'relative', textAlign:'center'}}
@@ -148,11 +158,11 @@ function Popup(props) {
         </button>
         <div
           className="d-flex justify-content-center"
-          style={{ width: '100px', height: '100px', zIndex: 9999 }}
+          style={{ width: "100px", height: "100px", zIndex: 9999 }}
           // onSubmit={(e) => submitHandler(e)}
         >
-          <form onSubmit={ submitHandler()}>
-            <div style={{ width: '70vw' }} className="d-flex row">
+          <form>
+            <div style={{ width: "70vw" }} className="d-flex row">
               <div>
                 <label>Dispatch date :</label>
                 <input
@@ -194,11 +204,12 @@ function Popup(props) {
                 <input
                   type="number"
                   placeholder="cost"
+                  // disabled={true}
                   value={formData.cost}
                   name="totalCost"
                   onChange={(e) => {
-                    console.log(e)
-                    setFormData({ ...formData, cost: e.target.value })
+                    console.log(e);
+                    setFormData({ ...formData, cost: e.target.value });
                   }}
                 ></input>
               </div>
@@ -221,7 +232,7 @@ function Popup(props) {
                 <input
                   type="number"
                   placeholder=" id"
-                  disabled={true}
+                  disabled={false}
                   value={formData.id}
                   name="Id"
                   onChange={(e) =>
@@ -230,18 +241,15 @@ function Popup(props) {
                 />
               </div>
             </div>
-
-            <button type="submit">submit</button>
           </form>
+          <button onClick={submitHandler}>submit</button>
         </div>
       </div>
     </div>
-  ) : (
-    ''
-  )
+  );
 }
 
-export default Popup
+export default Popup;
 
 {
   /* <AdminOrderItem
