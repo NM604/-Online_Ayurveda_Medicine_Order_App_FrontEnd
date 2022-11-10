@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 import Collapse from "react-bootstrap/Collapse";
 import UpdateUtil from "./UpdateUtil";
+import { userActions } from "../../store/user";
 
 function LoginUtil() {
   const initialValues = { id: 0, password: "" };
@@ -22,6 +23,7 @@ function LoginUtil() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.isAuth);
   const id = useSelector((state) => state.userId);
+  const user = useSelector((state) => state.type);
 
   useEffect(() => {
     const storedUserLoggedInfo = localStorage.getItem("isLoggedIn");
@@ -57,9 +59,11 @@ function LoginUtil() {
       .post("/oam/administrator/admin", formValues)
       .then((response) => {
         setResponse(response.data);
+        const newId = response.data;
         dispatch(authActions.login());
-        dispatch(save(formValues.id));
-        navigate("/welcome");
+        dispatch(save(newId.slice(37)));
+        dispatch(userActions.login("admin"));
+        navigate("/admin");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);
@@ -73,7 +77,8 @@ function LoginUtil() {
         setResponse(response.data);
         dispatch(authActions.login());
         dispatch(save(formValues.id));
-        navigate("/welcome");
+        dispatch(userActions.login("admin"));
+        navigate("/admin");
       })
       .catch((error) => {
         setResponse(error.response.data.errorMessage);

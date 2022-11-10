@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useNavigate, Navigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React from "react";
 import AdminLogin from "./components/Admin/AdminLogin";
 import CustomerLogin from "./components/Customer/CustomerLogin";
 import Admin from "./components/Admin/Admin";
@@ -9,14 +8,15 @@ import Orders from "./components/Order/customer/Orders";
 import OrderProductDetails from "./components/Order/products/OrderProductDetails";
 import MedicineListing from "./components/MedicineListing";
 import CartProducts from "./components/Cart/CartProducts";
-import { useDispatch, useSelector } from "react-redux";
-import Button from "react-bootstrap/Button";
-import Welcome from './components/Layout/Welcome'
 import { authActions } from "./store/auth";
 import CustomerDetails from "./components/Customer/CustomerDetails";
 import Dashboard from "./components/Dashboard";
 import WelcomePage from "./components/Layout/WelcomePage";
-import AdminOrders from './components/Order/admin/AdminOrders'
+import AdminOrders from "./components/Order/admin/AdminOrders";
+import MedicineUpdate from "./components/Medicine/MedicineUpdate";
+import MedicineAdd from "./components/Medicine/MedicineAdd";
+import MedicineUpdateForm from "./components/Medicine/MedicineUpdateForm";
+
 function App() {
   return (
     <Router>
@@ -34,6 +34,12 @@ function App() {
           <Route path="/my-orders" element={<Orders />} />
           <Route path="/my-orders/:id" element={<OrderProductDetails />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/updateMedicine" element={<MedicineUpdate />} />
+          <Route path="/addMedicines" element={<MedicineAdd />} />
+          <Route
+            path="/medicine-updateform/:medicineId"
+            element={<MedicineUpdateForm />}
+          />
         </Routes>
       </div>
     </Router>

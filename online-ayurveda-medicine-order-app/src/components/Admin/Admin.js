@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
-import { NavLink } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
@@ -113,11 +112,21 @@ function Admin() {
               <Card.Title>Medicine Management</Card.Title>
               <Card.Text>
                 Perform management on medicine store. For example, adding new
-                medicines, deleting medicine out of stock or updating details
-                for any medicine.
+                medicines, deleting medicines that are out of stock or updating
+                details for any medicine.
               </Card.Text>
-              <Button variant="primary" onClick={() => navigate("/managemeds")}>
-                Click
+              <Button
+                variant="primary"
+                onClick={() => navigate("/updateMedicine")}
+                style={{ marginRight: "20px" }}
+              >
+                View/Modify
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => navigate("/addMedicines")}
+              >
+                Add
               </Button>
             </Card.Body>
           </Card>
@@ -138,8 +147,9 @@ function Admin() {
               <Button
                 variant="primary"
                 onClick={() => navigate("/manageorders")}
+                style={{ marginTop: "50px" }}
               >
-                Click
+                Update
               </Button>
             </Card.Body>
           </Card>
@@ -160,8 +170,9 @@ function Admin() {
               <Button
                 variant="primary"
                 onClick={() => navigate("/managecustomer")}
+                style={{ marginTop: "50px" }}
               >
-                Click
+                Delete
               </Button>
             </Card.Body>
           </Card>

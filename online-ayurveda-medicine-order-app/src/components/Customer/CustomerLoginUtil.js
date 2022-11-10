@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 import Collapse from "react-bootstrap/Collapse";
+import { userActions } from "../../store/user";
 
 function CustomerLoginUtil() {
   const initialValues = {
@@ -27,6 +28,7 @@ function CustomerLoginUtil() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth.isAuth);
   const id = useSelector((state) => state.userId);
+  const user = useSelector((state) => state.type);
 
   useEffect(() => {
     const storedUserLoggedInfo = localStorage.getItem("isLoggedIn");
@@ -62,8 +64,10 @@ function CustomerLoginUtil() {
       .post("/oam/userinterface/customers", formValues)
       .then((response) => {
         setResponse(response.data);
+        const newId = response.data;
         dispatch(authActions.login());
-        dispatch(save(formValues.customerId));
+        dispatch(save(newId.slice(37)));
+        dispatch(userActions.login("customer"));
         navigate("/welcome");
       })
       .catch((error) => {
@@ -78,6 +82,7 @@ function CustomerLoginUtil() {
         setResponse(response.data);
         dispatch(authActions.login());
         dispatch(save(formValues.customerId));
+        dispatch(userActions.login("customer"));
         navigate("/welcome");
       })
       .catch((error) => {

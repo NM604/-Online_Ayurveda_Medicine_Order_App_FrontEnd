@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authActions } from "../store/auth";
 import { save } from "../store/cred";
+import Button from "react-bootstrap/Button";
+import "../CSS/dashboard.css";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -27,9 +29,17 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <button onClick={handleAdminClick}>Login as Admin</button>
-      <button onClick={handleCustomerClick}>Login as Customer</button>
+    <div className="container">
+      <Button className="button" variant="success" onClick={handleAdminClick}>
+        Login as Admin
+      </Button>
+      <Button
+        className="button"
+        variant="primary"
+        onClick={handleCustomerClick}
+      >
+        Login as Customer
+      </Button>
     </div>
   );
 }

@@ -23,6 +23,9 @@ const CustomerDetails = () => {
       .then((res) => {
         console.log(res);
         setCustomerDetails(res.data);
+      })
+      .catch((error) => {
+        setResponse(error.response.data.errorMessage);
       });
   };
 
