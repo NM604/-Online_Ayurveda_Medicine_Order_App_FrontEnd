@@ -1,31 +1,67 @@
 .popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
-    
-    .popup-inner {
-    position: absolute;
-    padding: 130px;
-    width: 80%;
-    max-width: 800px;
-    background-color: rgb(173, 174, 164);
-    }
-    
-    .popup-inner .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    }
+  position: absolute;
+  top: 18%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
 
-    /* .popup-inner .sub-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-inner {
+  position: absolute;
+  padding: 130px;
+  width: 80%;
+  max-width: 800px;
+  background-color: white;
+}
+
+.popup-inner .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+}
+
+.popup-form{
+    width: 10rem;
+    height: 5rem;
+    position: absolute;
+    left: 5%;
+    top: -1%;
+    max-width: 800px;
+    
+}
+.popup-form-container{
+    padding: 2rem;
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.popup-form-item{
+  width: 25rem;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+
+.sub-btn{
+  position: absolute;
+  bottom: 10%;
+  right: 20%;
+  background-color: rgb(82, 82, 251);
+  color: white;
+  border-radius: 5px;
+}
+/* .popup-inner .sub-btn {
         
         position: relative;
         top: 20px;

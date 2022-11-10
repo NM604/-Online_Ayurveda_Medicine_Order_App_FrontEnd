@@ -7,13 +7,6 @@ import { json } from "react-router-dom";
 
 function Popup(props) {
   console.log(props);
-  // const [data, setData] = useState({
-  //   id: '',
-  //   dispatchDate: '',
-  //   orderDate: '',
-  //   orderStatus: '',
-  //   cost: '',
-  // });
 
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState({});
@@ -24,17 +17,7 @@ function Popup(props) {
     orderStatus: props.prop.status,
     cost: parseInt(props.prop.cost),
     customerId: props.prop.customerId,
-    // customerId: props.prop.customerId
   });
-
-  // const body = {
-  //   id: formData.id,
-  //   dispatchDate: formData.dispatchDate,
-  //   orderDate: formData.orderDate,
-  //   orderStatus: formData.orderStatus,
-  //   totalCost: formData.totalCost,
-
-  // }
 
   function onChange(e) {
     let name = e.target.name;
@@ -44,57 +27,9 @@ function Popup(props) {
     console.log(formData);
   }
 
-  // const body = {
-  //   orderDetailId: formData.orderDetailId,
-  //   dispatchDate: formData.dispatchDate,
-  //   orderDate: formData.orderDate,
-  //   orderStatus: formData.orderStatus,
-  //   totalCost: formData.totalCost,
-  //   customer: props.prop.customer,
-  // }
-
-  // const submitHandler = () => {
-  //   updateStatus();
-  //   window.location.reload(false);
-  // };
-  // const updateStatus = async () => {
-  //   try {
-  //     const data = await axios.put(
-  //       `http://localhost:8080/oam/order-details`,formData
-
-  //     );
-  //     // const orderItems = await data.data;
-  //     console.log(formData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // const submitHandler = (e) => {
-
-  //   // setFormErrors(validate(formValues));
-  //   updateOrder();
-  // };
-
-  // const updateOrder = async () => {
-  //   const data = await backendAPI
-  //     .put(`http://localhost:8080/oam/order-detail`, body)
-  //     .then((orders) => {
-  //       setOrders(orders.data);
-  //       window.location.reload(false);
-  //     })
-  //     .catch((error) => {
-  //       setOrders(error.orders.data.errorMessage);
-  //     });
-  // };
-  // const updateMedicine= async (medicineId)=>{
-  //   try{
-  //     const res=await axios.put(``,)
-  //   }
-  // }
-
   async function submitHandler() {
     console.log(formData);
-    console.log('data');
+    console.log("data");
     const putData = {
       orderDetailId: formData.id,
       orderDate: formData.orderDate,
@@ -118,31 +53,6 @@ function Popup(props) {
       console.log(orderItems);
       props.setTrigger(false);
       props.prop.fetchData();
-      // let res = await fetch("http://localhost:8080/oam/order-details", {
-      //   method: "PUT",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     orderDetailId: formData.id,
-      //     orderDate: formData.orderDate,
-      //     dispatchDate: formData.dispatchDate,
-      //     orderStatus: formData.orderStatus,
-      //     totalCost: formData.totalCost,
-      //     customer: {
-      //       customerId: props.prop.customerId,
-      //       customerName: props.prop.customerName,
-      //       customerPassword: props.prop.customerPassword,
-      //     },
-      //   }),
-      // });
-
-      // if (res.status == 200) {
-      //   props.setTrigger(false);
-      //   props.prop.fetchData();
-      // } else {
-      // }
-      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -161,9 +71,9 @@ function Popup(props) {
           style={{ width: "100px", height: "100px", zIndex: 9999 }}
           // onSubmit={(e) => submitHandler(e)}
         >
-          <form>
-            <div style={{ width: "70vw" }} className="d-flex row">
-              <div>
+          <form className="popup-form">
+            <div className="popup-form-container">
+              <div className="popup-form-item">
                 <label>Dispatch date :</label>
                 <input
                   type="date"
@@ -175,7 +85,7 @@ function Popup(props) {
                   }
                 />
               </div>
-              <div>
+              <div className="popup-form-item">
                 <label>Order date :</label>
                 <input
                   type="date"
@@ -187,7 +97,7 @@ function Popup(props) {
                   }
                 />
               </div>
-              <div>
+              <div className="popup-form-item">
                 <label>Order Status :</label>
                 <input
                   type="text"
@@ -199,7 +109,7 @@ function Popup(props) {
                   }
                 />
               </div>
-              <div>
+              <div className="popup-form-item">
                 <label>Cost :</label>
                 <input
                   type="number"
@@ -214,7 +124,7 @@ function Popup(props) {
                 ></input>
               </div>
 
-              <div>
+              <div className="popup-form-item">
                 <label>Customer Id :</label>
                 <input
                   type="number"
@@ -227,7 +137,7 @@ function Popup(props) {
                   }
                 />
               </div>
-              <div>
+              <div className="popup-form-item">
                 <label>Id :</label>
                 <input
                   type="number"
@@ -242,7 +152,7 @@ function Popup(props) {
               </div>
             </div>
           </form>
-          <button onClick={submitHandler}>submit</button>
+          <button className="sub-btn" onClick={submitHandler}>submit</button>
         </div>
       </div>
     </div>
