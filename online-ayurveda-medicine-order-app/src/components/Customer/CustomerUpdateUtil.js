@@ -3,6 +3,7 @@ import backendAPI from "../../apis/backendAPI";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
+import "../../CSS/custupdate.css";
 
 function CustomerUpdateUtil() {
   const initialValues = {
@@ -44,10 +45,10 @@ function CustomerUpdateUtil() {
       errors.customerId = "ID is required!";
     }
     if (!values.customerName) {
-      errors.customerName = "Email is required!";
+      errors.customerName = "Username is required!";
     }
     if (!values.customerPassword) {
-      errors.customerPassword = "Password is required";
+      errors.customerPassword = "Password is required!";
     } else if (values.customerPassword.length < 4) {
       errors.customerPassword = "Password must be more than 4 characters";
     } else if (values.customerPassword.length > 10) {
@@ -59,11 +60,11 @@ function CustomerUpdateUtil() {
 
   return (
     <Form>
-      <h2>
+      <h2 id="head">
         Change Password <Badge bg="success">Customer</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
-        <Form.Label>Customer ID</Form.Label>
+        <Form.Label id="input"><b>Customer ID</b></Form.Label>
         <Form.Control
           type="number"
           name="customerId"
@@ -71,10 +72,10 @@ function CustomerUpdateUtil() {
           value={formValues.customerId}
           onChange={handleChange}
         />
-        <Form.Text className="text-muted">{formErrors.customerId}</Form.Text>
+        <Form.Text className="text" ><b>{formErrors.customerId}</b></Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerName">
-        <Form.Label>Username</Form.Label>
+        <Form.Label id="input"><b>Username</b></Form.Label>
         <Form.Control
           type="text"
           name="customerName"
@@ -82,10 +83,10 @@ function CustomerUpdateUtil() {
           value={formValues.customerName}
           onChange={handleChange}
         />
-        <Form.Text className="text-muted">{formErrors.customerName}</Form.Text>
+        <Form.Text className="text" ><b>{formErrors.customerName}</b></Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerPassword">
-        <Form.Label>Password</Form.Label>
+        <Form.Label id="input"><b>Password</b></Form.Label>
         <Form.Control
           type="password"
           name="customerPassword"
@@ -93,12 +94,12 @@ function CustomerUpdateUtil() {
           value={formValues.customerPassword}
           onChange={handleChange}
         />
-        <Form.Text className="text-muted">
+        <Form.Text className="text" ><b>
           {formErrors.customerPassword}
-        </Form.Text>
+          </b></Form.Text>
       </Form.Group>
       <div className="buttons-update">
-        <Button variant="primary" onClick={handleUpdate}>
+        <Button variant="primary" onClick={handleUpdate} id="btn">
           Update
         </Button>
       </div>
