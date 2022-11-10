@@ -10,7 +10,7 @@ import backendAPI from "../../apis/backendAPI";
 import "../../CSS/profile.css";
 
 const CustomerDetails = () => {
-  const [CustomerDetails, setCustomerDetails] = useState({});
+  const [customerDetails, setCustomerDetails] = useState({});
   const id = useSelector((state) => state.userId);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState();
@@ -57,12 +57,12 @@ const CustomerDetails = () => {
 
   return (
     <div className="container" id="con">
-      <div key={CustomerDetails.customerId} className="cust">
+      <div key={customerDetails.customerId} className="cust">
         <h1>Customer Details
         </h1><br/>
-        <h5 className="details">ID : {CustomerDetails.customerId}</h5>
-        <h5 className="details">Name : {CustomerDetails.customerName}</h5>
-        <h5 className="details">Password : {CustomerDetails.customerPassword}</h5>
+        <h5 className="details">ID : {customerDetails.customerId}</h5>
+        <h5 className="details">Name : {customerDetails.customerName}</h5>
+        <h5 className="details">Password : {customerDetails.customerPassword}</h5>
       </div>
 
       <Button variant="danger" onClick={handleDelete} id="btn">
