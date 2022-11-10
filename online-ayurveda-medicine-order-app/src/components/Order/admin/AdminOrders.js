@@ -6,16 +6,24 @@ import classes from "./AdminOrders.module.css";
 import Table from "react-bootstrap/Table";
 import AdminOrderTable from "./AdminOrderTable";
 import ErrorCard from "../../UI/ErrorCard";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState();
   const [sq, setsq] = useState("");
+
+  const [filter, setfilter] = useState("Select Filter");
+
   useEffect(() => {
     if (filter == "Select Filter") {
       fetchData();
     }
   }, []);
+
   const fetchData = async () => {
     try {
       const data = await axios.get(`http://localhost:8080/oam/order-details`);
@@ -25,30 +33,51 @@ const AdminOrders = () => {
       setError(err);
     }
   };
-  console.log(orders);
 
-  const [filter, setfilter] = useState("Select Filter");
+  useEffect(() => {
+    console.log("change" + sq);
+    filterData(sq);
+  }, [sq]);
+
   function filterData(dt) {
     if (filter == "Select Filter" || dt == "") {
       fetchData();
     } else {
       let cp = [...orders];
       let rp = "";
-      cp.sort((x) => {
-        if (typeof x[filter] == "number") {
+      const filteredOrders = cp.filter((x) => {
+        console.log(x);
+        if (filter === "customerId") {
+          rp = x.customer.customerId.toString();
+        } else if (typeof x[filter] == "number") {
           rp = x[filter].toString();
         } else {
           rp = x[filter].toUpperCase();
         }
-        console.log(rp.match(dt), rp, dt);
+
+        //console.log(rp.match(dt), rp, dt);
         if (rp.match(dt.toUpperCase())) {
-          return -1;
+          return true;
         } else {
-          return 1;
+          return false;
         }
       });
-      console.log(cp);
-      setOrders(cp);
+
+      // cp.sort((x) => {
+      //   if (typeof x[filter] == "number") {
+      //     rp = x[filter].toString();
+      //   } else {
+      //     rp = x[filter].toUpperCase();
+      //   }
+      //   //console.log(rp.match(dt), rp, dt);
+      //   if (rp.match(dt.toUpperCase())) {
+      //     return -1;
+      //   } else {
+      //     return 1;
+      //   }
+      // });
+      //console.log(cp);
+      setOrders(filteredOrders);
     }
   }
 
@@ -59,19 +88,26 @@ const AdminOrders = () => {
       {error && <ErrorCard />}
       {!error && (
         <div className={classes["admin-order-items"]}>
-          <div>
-            <select value={filter} onChange={(e) => setfilter(e.target.value)}>
-              <option>Select Filter</option>
-              <option>orderDetailId</option>
-              <option>totalCost</option>
-              <option>orderStatus</option>
-            </select>
-            <input
-              type="text"
-              placeholder="search"
+          <div className={classes["filter-form"]}>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={filter}
+              label="Select"
+              onChange={(e) => setfilter(e.target.value)}
+            >
+              <MenuItem value="Select Filter">Select Filter</MenuItem>
+              <MenuItem value="orderDetailId">Order id</MenuItem>
+              <MenuItem value="totalCost">Total Cost</MenuItem>
+              <MenuItem value="orderStatus">Status</MenuItem>
+              <MenuItem value="customerId">Customer id</MenuItem>
+            </Select>
+            <TextField
               value={sq}
               onChange={(e) => setsq(e.target.value)}
-              onKeyUp={(e) => filterData(e.target.value)}
+              id="outlined-basic"
+              label={filter}
+              variant="outlined"
             />
           </div>
           <Table striped bordered hover>
@@ -89,8 +125,8 @@ const AdminOrders = () => {
             <tbody>
               {orders.length === 0 && (
                 <tr>
-                  <td colSpan="4">
-                    <h4>Your order is empty</h4>
+                  <td colSpan="7">
+                    <h4>No orders to display</h4>
                   </td>
                 </tr>
               )}

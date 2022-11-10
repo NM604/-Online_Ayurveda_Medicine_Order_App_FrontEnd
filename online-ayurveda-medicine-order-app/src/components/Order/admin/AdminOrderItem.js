@@ -5,6 +5,7 @@ import Card from "../../UI/Card";
 import { UpdateOrderPopup } from "./Popup.js";
 import Popup from "./Popup.js";
 import classes from "./AdminOrderItem.module.css";
+import Button from "react-bootstrap/Button";
 
 const AdminOrderItem = (props) => {
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -27,42 +28,33 @@ const AdminOrderItem = (props) => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState({});
 
-
   return (
-      <tr>
-        <td>{props.id}</td>
-        <td>{props.orderDate}</td>
-        <td>{props.dispatchDate}</td>
-        <td>{props.cost}</td>
-        
-        <td>
-          <div
-            style={{
-              borderColor: `${bg}`,
-              color: `${bg}`,
-            }}
-            className={classes["order-status"]}
-          >
-            {props.status}
-          </div>
-        </td>
-        <td>{props.customerId}</td>
-        <td>
-          <button
-            className={classes["info-status"]}
-            style={{ color: "white" }}
-            onClick={() => setButtonPopup(true)}
-          >
-            {" "}
-            UPDATE ORDER
-          </button>
-          <Popup
-            prop={props}
-            trigger={buttonPopup}
-            setTrigger={setButtonPopup}
-          />
-        </td>
-      </tr>
+    <tr>
+      <td>{props.id}</td>
+      <td>{props.orderDate}</td>
+      <td>{props.dispatchDate}</td>
+      <td>{props.cost}</td>
+
+      <td>
+        <div
+          style={{
+            border:"1px solid",
+            borderColor: `${bg}`,
+            color: `${bg}`,
+          }}
+          className={classes["order-status"]}
+        >
+          {props.status}
+        </div>
+      </td>
+      <td>{props.customerId}</td>
+      <td>
+        <Button variant="primary" onClick={() => setButtonPopup(true)}>
+          UPDATE ORDER
+        </Button>
+        <Popup prop={props} trigger={buttonPopup} setTrigger={setButtonPopup} />
+      </td>
+    </tr>
   );
 };
 

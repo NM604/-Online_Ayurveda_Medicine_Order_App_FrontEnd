@@ -1,0 +1,31 @@
+
+.admin-order-container{
+    padding: 1rem;
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.admin-order-header{
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: left;
+    margin-left:30% ;
+}
+
+.admin-order-items{
+    width: 70%;
+    margin: 0 50%;
+}
+.admin-order-items th,.admin-order-items tr, .order-items td {
+    text-align:center;
+}
+
+.filter-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+    gap: 1rem;
+}

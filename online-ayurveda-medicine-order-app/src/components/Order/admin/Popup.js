@@ -10,7 +10,6 @@ import axios from 'axios'
 import { json } from 'react-router-dom'
 
 function Popup(props) {
-  console.log(props)
   // const [data, setData] = useState({
   //   id: '',
   //   dispatchDate: '',
