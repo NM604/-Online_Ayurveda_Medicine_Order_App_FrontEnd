@@ -12,6 +12,7 @@ const MainHeader = () => {
   //const [isAuth,setAuth] = useState();
   const isAuth = useSelector((state) => state.auth.isAuth);
   const user = localStorage.getItem("loggedType");
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
   //console.log(user==='admin');
   // useEffect(()=>{
   //   setAuth(localStorage.getItem("isLoggedIn"))
@@ -25,7 +26,7 @@ const MainHeader = () => {
             <h2>Ayurveda</h2>
           </NavLink>
         </div>
-        {user && (
+        {isLoggedIn==='1' && (
           <div>
             <ul>
               {user === "admin" && (

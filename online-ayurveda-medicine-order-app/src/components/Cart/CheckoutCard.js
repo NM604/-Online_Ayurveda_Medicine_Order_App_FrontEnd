@@ -9,7 +9,7 @@ import classes from "./CheckoutCard.module.css";
 function CheckoutCard(props) {
   const custId = localStorage.getItem("loggedId");
   const localStorageCart = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
+    localStorage.getItem("cartItems")
   );
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);

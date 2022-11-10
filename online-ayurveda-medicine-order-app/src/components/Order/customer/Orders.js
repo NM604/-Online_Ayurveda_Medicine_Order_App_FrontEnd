@@ -32,7 +32,7 @@ const Orders = () => {
       <div className={classes["order-header"]}>
         <h1>My Orders</h1>
       </div>
-      {error && <ErrorCard/>}
+      {error && <ErrorCard error={error}/>}
       {!error && (
         <div className={classes["order-items"]}>
           <Table striped bordered hover>
@@ -43,7 +43,8 @@ const Orders = () => {
                 <th>Dispatch date</th>
                 <th>Price</th>
                 <th>Status</th>
-                <th></th>
+                <th>Cancel</th>
+                <th>Show details</th>
               </tr>
             </thead>
             <tbody>

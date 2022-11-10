@@ -69,7 +69,7 @@ const OrderProductDetails = () => {
                 <TableCell>Medicine name</TableCell>
                 <TableCell align="center">Qty.</TableCell>
                 <TableCell align="center">Unit price</TableCell>
-                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Total price</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -80,7 +80,7 @@ const OrderProductDetails = () => {
                   </TableCell>
                   <TableCell align="center">{item.quantity}</TableCell>
                   <TableCell align="center">{item.price}</TableCell>
-                  <TableCell align="center">15</TableCell>
+                  <TableCell align="center">{item.quantity*item.price}</TableCell>
                 </TableRow>
               ))}
 

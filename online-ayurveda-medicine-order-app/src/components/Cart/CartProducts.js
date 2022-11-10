@@ -10,9 +10,8 @@ import CheckoutCard from "./CheckoutCard";
 const CartProducts = () => {
   //console.log(localStorage.getItem("cartItems"));
   const localStorageCart = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
+    localStorage.getItem("cartItems")
   );
-  console.log(localStorageCart);
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -101,15 +100,16 @@ const CartProducts = () => {
               <tr>
                 <th>Medicine id</th>
                 <th>Medicine name</th>
-                <th>quantity</th>
-                <th>price</th>
-                <th></th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total price</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {localStorageCart.length === 0 && (
                 <tr>
-                  <td colSpan="4">
+                  <td colSpan="6">
                     <h4>Your cart is empty</h4>
                   </td>
                 </tr>

@@ -33,6 +33,7 @@ const CartProductItem = (props) => {
         </div>
       </td>
       <td>{props.price}</td>
+      <td>{props.quantity*props.price}</td>
       <td>
         <Button variant="danger" onClick={removeHandler}>
           remove
