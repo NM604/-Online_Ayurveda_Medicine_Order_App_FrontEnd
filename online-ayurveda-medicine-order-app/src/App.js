@@ -6,7 +6,7 @@ import Admin from "./components/Admin/Admin";
 import MainHeader from "./components/Layout/MainHeader";
 import Orders from "./components/Order/customer/Orders";
 import OrderProductDetails from "./components/Order/products/OrderProductDetails";
-import MedicineListing from "./components/MedicineListing";
+import MedicineListing from "./components/Medicine/MedicineListing";
 import CartProducts from "./components/Cart/CartProducts";
 import { authActions } from "./store/auth";
 import CustomerDetails from "./components/Customer/CustomerDetails";
@@ -16,6 +16,7 @@ import AdminOrders from "./components/Order/admin/AdminOrders";
 import MedicineUpdate from "./components/Medicine/MedicineUpdate";
 import MedicineAdd from "./components/Medicine/MedicineAdd";
 import MedicineUpdateForm from "./components/Medicine/MedicineUpdateForm";
+import Footer from "./components/Layout/Footer";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer/>
     </Router>
   );
 }

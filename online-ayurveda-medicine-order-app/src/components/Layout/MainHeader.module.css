@@ -1,12 +1,14 @@
 .header {
     height: 80px;
-    background-color: #044599;
+    background-color: #1565C0;
     padding: 0 10%;
     
   }
 
   .header .brand{
-    color: white;
+    color: #FDFDFD;
+    font-weight: bold;
+
   }
   
   .header nav {
@@ -15,6 +17,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    font-size: 19px;
+
   }
   
   .header ul {
@@ -40,7 +44,7 @@
   .header a:active,
   .header a.active {
     color: #95bcf0;
-    padding-bottom: 0.25rem;
-    border-bottom: 4px solid #95bcf0;
+    /* padding-bottom: 0.25rem;
+    border-bottom: 4px solid #95bcf0; */
   }
   
