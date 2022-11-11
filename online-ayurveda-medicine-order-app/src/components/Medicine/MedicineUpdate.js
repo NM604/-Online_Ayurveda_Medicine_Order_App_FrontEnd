@@ -1,212 +1,33 @@
-// import React, { useState ,useEffect} from 'react'
-// import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
-// import Badge from "react-bootstrap/Badge";
-// import Collapse from "react-bootstrap/Collapse";
-// import axios from 'axios';
-// import Card from '../UI/Card';
-
-
-// function MedicineUpdate() {
-//     const [open,setOpen] = useState(true);
-//     const [medicines,setMedicines] = useState([{}]);
-//     const [formValues, setFormValues] = useState({
-//       categoryDTO: { categoryId: 1, categoryName: "hair" },
-//       companyName: "",
-//       expiryDate: "",
-//       medicineCost: 0,
-//       medicineName: "",
-//       mfd: "",
-//     });
-
-//       const [formErrors,setFormErrors] = useState({});
-
-//       const handleChange  = (e) =>{
-//       const newdata  = {...formValues};
-//     newdata[e.target.name] = e.target.value;
-//     setFormValues(newdata);
-//     console.log(newdata);
-//       }
-//       const handleSubmit = () =>{
-        
-//       }
-
-//       const fetchMedicines = async () => {
-//         try {
-//           const response = await axios.get(
-//             "http://localhost:8080/oam/userinterface/medicine"
-//           );
-//           setMedicines(response.data);
-//           console.log(response);
-//         } catch (err) {
-//           setFormErrors(err);
-//         }
-//       };
-    
-//       useEffect(() => {
-//         fetchMedicines();
-//       }, []);
-
-//   return (
-//     <div>List of medicines
-//       <div>
-//         {
-//           medicines.map((medicine)=>{
-//             const { medicineId, medicineName, medicineCost, companyName , expiryDate, mfd} = medicine;
-//             const medItem = {
-//               medicineId: medicineId,
-//               medicineName: medicineName,
-//               price: medicineCost,
-//               companyName: companyName,
-//               expiryDate: expiryDate,
-//               mfd: mfd
-//             };
-//             return(
-//             <Card>
-//             <div key={medicineId}>
-//               <h1>{medicineName}</h1>
-//               <h2>{companyName}</h2>
-//               <h2>{medicineCost}</h2>
-//               <span>From: {mfd} To: {expiryDate}</span>
-//               <div className="buttons">
-//           <Button
-//             variant="warning"
-//             onClick={() => setOpen(!open)}
-//             aria-controls="example-collapse-text"
-//             aria-expanded={open}
-//           >
-//             Update Medicine
-//           </Button>
-//         </div>
-        
-//         <Collapse in={open}>
-//           <div id="example-collapse-text">
-//             <Form>
-//               <h2>
-//                 Change values <Badge bg="success">Admin</Badge>
-//               </h2>
-//               <Form.Group className="mb-3" controlId="id">
-//                 <Form.Label>AdminID</Form.Label>
-//                 <Form.Control
-//                   type="number"
-//                   name="id"
-//                   placeholder="Enter ID"
-//                   value={formValues.id}
-//                   onChange={handleChange}
-//                 />
-//                 <Form.Text className="text-muted">{formErrors.id}</Form.Text>
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="password">
-//                 <Form.Label>Medicine name</Form.Label>
-//                 <Form.Control
-//                   type="text"
-//                   name="medicineName"
-//                   placeholder="enter medicine name"
-//                   value={formValues.medicineName}
-//                   onChange={handleChange}
-//                 />
-//                 <Form.Text className="text-muted">
-//                   {formErrors.password}
-//                 </Form.Text>
-//               </Form.Group>
-//               <div className="buttons">
-//                 <Button variant="primary" onClick={handleSubmit}>
-//                   Submit
-//                 </Button>
-//               </div>
-//             </Form>
-//           </div>
-//         </Collapse>
-
-//             </div>
-//           </Card>
-//             )
-//           })
-//         };
-//         {/* <div className="buttons">
-//           <Button
-//             variant="warning"
-//             onClick={() => setOpen(!open)}
-//             aria-controls="example-collapse-text"
-//             aria-expanded={open}
-//           >
-//             Update Medicine
-//           </Button>
-//         </div>
-        
-//         <Collapse in={open}>
-//           <div id="example-collapse-text">
-//             <Form>
-//               <h2>
-//                 Change values <Badge bg="success">Admin</Badge>
-//               </h2>
-//               <Form.Group className="mb-3" controlId="id">
-//                 <Form.Label>AdminID</Form.Label>
-//                 <Form.Control
-//                   type="number"
-//                   name="id"
-//                   placeholder="Enter ID"
-//                   value={formValues.id}
-//                   onChange={handleChange}
-//                 />
-//                 <Form.Text className="text-muted">{formErrors.id}</Form.Text>
-//               </Form.Group>
-//               <Form.Group className="mb-3" controlId="password">
-//                 <Form.Label>Medicine name</Form.Label>
-//                 <Form.Control
-//                   type="text"
-//                   name="medicineName"
-//                   placeholder="enter medicine name"
-//                   value={formValues.medicineName}
-//                   onChange={handleChange}
-//                 />
-//                 <Form.Text className="text-muted">
-//                   {formErrors.password}
-//                 </Form.Text>
-//               </Form.Group>
-//               <div className="buttons">
-//                 <Button variant="primary" onClick={handleSubmit}>
-//                   Submit
-//                 </Button>
-//               </div>
-//             </Form>
-//           </div>
-//         </Collapse> */}
-//         </div>
-//     </div>
-//   )
-// }
-
-// export default MedicineUpdate
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import Card from "../UI/Card";
+import classes from "./MedicineUpdate.module.css";
+
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import red from "@mui/material/colors/red";
+import UpgradeIcon from '@mui/icons-material/Upgrade';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: red[500],
+    },
+    secondary: {
+      main: "#11cb5f",
+    },
+  },
+});
 
 const MedicineUpdate = () => {
   const [medicines, setMedicines] = useState([]);
@@ -230,115 +51,106 @@ const MedicineUpdate = () => {
   }, []);
 
   const deleteMedicine = async (medicineId) => {
-    try{
-        await axios.delete(
-            `http://localhost:8080/oam/userinterface/medicine/${medicineId}`
-          ).then((res)=>{console.log("deleted!!!",res)});
-    }
-    catch(error){
-        console.log(error);
+    try {
+      await axios
+        .delete(
+          `http://localhost:8080/oam/userinterface/medicine/${medicineId}`
+        )
+        .then((res) => {
+          console.log("deleted!!!", res);
+        });
+    } catch (error) {
+      console.log(error);
     }
   };
   const deleteHandler = (medicineId) => {
-
     deleteMedicine(medicineId);
     window.location.reload(false);
-    
-
   };
 
   const updateHandler = (medicineId) => {
     // updateMedicine(medicineId);
-
   };
 
   return (
-    <div className="productListing">
-      <h1>All medicines</h1>
+    <div className={classes.productListing}>
+      <div className={classes.addButton}>
+      <Link to={"/addMedicines"}> 
+      <Button
+        type="button"
+        size="small"
+        variant="contained"
+        // onClick={() => updateHandler(row.medicineId)}
+      >
+        Add medicine
+      </Button>
+      </Link>
+      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="caption table">
+          <caption>All Medicines</caption>
+          <TableHead>
+            <TableRow>
+              <TableCell align="center">Medicine Id</TableCell>
+              <TableCell align="center">Medicine Name</TableCell>
+              <TableCell align="center">Company Name</TableCell>
+              <TableCell align="center">Price</TableCell>
+              <TableCell align="center">Category</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {medicines.map((row) => (
+              <TableRow key={row.medicineId}>
+                <TableCell align="center" component="th" scope="row">
+                  {row.medicineId}
+                </TableCell>
+                <TableCell align="center">{row.medicineName}</TableCell>
+                <TableCell align="center">{row.companyName}</TableCell>
+                <TableCell align="center">{row.medicineCost}</TableCell>
+                <TableCell align="center">
+                  {row.categoryDTO.categoryName}
+                </TableCell>
+                <TableCell align="center">
+                  {/* <Button variant="outlined" color="error">
+                    Error
+                  </Button> */}
+                  <div className={classes.buttonContainer}>
+                    <ThemeProvider theme={theme}>
+                      <Button
+                        variant="contained"
+                        startIcon={<DeleteIcon />}
+                        size="small"
+                        color="primary"
+                        onClick={() => deleteHandler(row.medicineId)}
+                      >
+                        Delete
+                      </Button>
+                    </ThemeProvider>
+                    {/* <div>    </div> */}
+                    {/* <br/><br/> */}
+                    <Link to={`/medicine-updateform/${row.medicineId}`}>
+                      <Button
+                        startIcon = {<UpgradeIcon/>}
+                        type="button"
+                        size="small"
+                        variant="contained"
+                        // onClick={() => updateHandler(row.medicineId)}
+                      >
+                        Update
+                      </Button>
+                    </Link>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
       {error && <h1>{error.message}</h1>}
-      {medicines.map((post) => {
-        const { medicineId, medicineName, medicineCost, companyName } = post;
-        const medItem = {
-          medicineId: medicineId,
-          medicineName: medicineName,
-       
-          price: medicineCost,
-        };
-        return (
-          <Card>
-            <div key={medicineId}>
-              <h1>{medicineName}</h1>
-              <h2>{companyName}</h2>
-              <h2>{medicineCost}</h2>
-              
-                <button type="button" onClick={()=>deleteHandler(medicineId)}>Delete</button>
-                <Link to= {`/medicine-updateform/${medItem.medicineId}`}  ><button type="button" onClick={()=>updateHandler(medicineId)}>Update</button></Link>
-              
-            </div>
-          </Card>
-        );
-      })}
-      ;
     </div>
   );
 };
 
 export default MedicineUpdate;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import axios from "axios";
-// import React, { useEffect, useState } from "react";
-
-// function MedicineUpdate() {
-//   const [id, setId] = useState();
-
-// //   useEffect(() => {
-// //     fetchMedicine(11);
-// //   }, []);
-
-//   const fetchMedicine = async () => {
-
-//     try {
-//       axios
-//         .get(`http://localhost:8080/oam/userinterface/medicine/${id}`)
-//         .then((res) => console.log("fetched!!!", res.data));
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   const handleInput = (e) => {
-//     setId(e.target.value);
-//   };
-
-//   const fromHandler = (e) =>{
-//     e.preventDefault();
-    
-//   }
-//   return (
-//     <div>
-//       {/* <div>MedicineUpdate</div> */}
-//       <form onSubmit={fromHandler}>
-//         <label >Enter Medicine Id</label>
-//           <input type="text" placeholder="medicine Id" onChange={handleInput}
-//           ></input>
-//           <button className="fluid ui button blue" onClick={fetchMedicine}>search</button>
-        
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default MedicineUpdate;

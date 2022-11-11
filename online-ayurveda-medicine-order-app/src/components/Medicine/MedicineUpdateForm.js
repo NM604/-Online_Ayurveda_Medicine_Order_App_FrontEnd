@@ -3,6 +3,30 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import classes from "./MedicineAdd.module.css";
+import {
+  Grid,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  // Select,
+} from "@mui/material";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function MedicineUpdateForm() {
   const { medicineId } = useParams();
   const [medicine, setMedicine] = useState({});
@@ -64,15 +88,6 @@ function MedicineUpdateForm() {
   const updateMedicine = async () =>{
     try{
       const res = await axios.put(`http://localhost:8080/oam/userinterface/medicine`,{
-  //       medicineId: 11,
-  //   medicineName: "giloyi23423",
-  //   medicineCost: 499,
-  //   mfd: "2021-10-02",
-  // expiryDate: "2023-10-02",
-  //   companyName: "abcd",
-  //   categoryDTO: {
-  //     categoryId: 1,
-  //     categoryName: "hair"}
         medicineId: medicine.medicineId,
         categoryDTO: formValues.categoryDTO,
         companyName: formValues.companyName,
@@ -99,10 +114,14 @@ function MedicineUpdateForm() {
     
   };
   const validate = (values) => {
+
+    console.log("validating!!!")
     const errors = {};
-    // const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const today = new Date();
+    // const regex = [0-9]+;
     if (!values.medicineName) {
       errors.medicineName = "medicine name is required!";
+
     }
     if (!values.companyName) {
       errors.companyName = "company name is required!";
@@ -110,17 +129,205 @@ function MedicineUpdateForm() {
     if (!values.mfd) {
       errors.mfd = "manufacturing date is required!";
     }
+    else if (values.mfd >= today ){
+      errors.mfd = "manufacturing date cannot be future!";
+    }
+    
     if (!values.expiryDate) {
-      errors.expiryDate= "expiary date is required!";
+      errors.expiryDate = "expiry date is required!";
+    }
+    else if (values.expiryDate  >= today ){
+      errors.expiryDate = "expiry date cannot be in past!";
     }
     if (!values.medicineCost) {
-        errors.medicineCost= "medicine cost is required!";
-      }
+      errors.medicineCost = "medicine cost is required!";
+    }
+    else if (values.medicineCost<= 0) {
+      errors.medicineCost = "medicine cost should be more than 0!";
+    }
+    console.log(errors);
     return errors;
   };
 
   return (
     <div>
+<div className={classes.formContainer}>
+        <Typography gutterBottom variant="h4" align="center" >
+          Update Medicine
+          {/* <p>{formErrors.medicineName}</p> */}
+        </Typography>
+        <Grid>
+          <Card
+            style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
+          >
+            <CardContent>
+              <form >
+                <Grid container spacing={1}>
+                  
+                  <Grid xs={12} item>
+                    {/* <div className="categorySelector">
+                    <select className= {classes.category}
+                      name="categoryName"
+                      value={formValues.categoryDTO.categoryName}
+                      onChange={onChangeCategory}
+                    >
+                      <option value="">Choose Category</option>
+                      {categoryNameList.map((category) => (
+                        <option
+                          value={category.categoryName}
+                          key={category.categoryId}
+                        >
+                          {category.categoryName}
+                        </option>
+                      ))}
+                    </select>
+                    </div> */}
+                  </Grid>
+                  <Grid xs={12} sm={8} item>
+                    <TextField
+                      type="text"
+                      name="medicineName"
+                      placeholder={medicine.medicineName}
+                      value={formValues.medicineName}
+                      onChange={handleChange}
+                      label="Medicine Name"
+                      variant="outlined"
+                  
+                      fullWidth
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      // required
+                      
+                    />
+                    
+                  </Grid>
+                  
+                  <Grid xs={9} sm={4} item>
+                    <TextField
+                      
+                      type="number"
+                      label="Cost"
+                      align="center"
+                      placeholder={medicine.medicineCost}
+                      value={formValues.medicineCost}
+                      name="medicineCost"
+                      
+                      onChange={handleChange}
+                    
+                      // margin="dense"
+                      variant="outlined"
+                      fullWidth
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      // required
+                    />
+                  </Grid>
+                  <Grid xs={12}  item>
+                  <TextField
+                      type="text"
+                      name="companyName"
+                      placeholder={medicine.companyName}
+                      margin="dense"
+                      value={formValues.companyName}
+                      onChange={handleChange}
+                  
+                      label="Company Name"
+                      variant="outlined"
+                      fullWidth
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      // required
+                    />
+                    
+                  </Grid>
+                  
+                  
+         
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="date"
+                      name="mfd"
+                      placeholder={medicine.mfd}
+                      value={formValues.mfd}
+                      onChange={handleChange}
+                   
+                      variant="outlined"
+                      label="Manufacturing Date"
+                      // max={disableDate}
+                      fullWidth
+                      // required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="outlined-Expiry"
+                      type="date"
+                      name="expiryDate"
+                      placeholder="Expiry Date"
+                      value={formValues.expiryDate}
+                      onChange={handleChange}
+                      defaultValue={medicine.expiryDate}
+                      variant="outlined"
+                      label="Expiry Date"
+                      // min ={disableDate}
+                      fullWidth
+                      // required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Button
+                    onClick={handleSubmit}
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
+                <br/>
+                
+                {/* <Alert severity="success">Medicine Added !!!</Alert> */}
+                
+                {/* <p>{message}</p> */}
+                <p>{formErrors.medicineName}</p>
+                <p>{formErrors.medicineCost}</p>
+                <p>{formErrors.companyName}</p>
+                <p>{formErrors.mfd}</p>
+                <p>{formErrors.expiryDate}</p>
+
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       Current values
       <br/>
       <div>Medicine Id: {medicine.medicineId}</div>

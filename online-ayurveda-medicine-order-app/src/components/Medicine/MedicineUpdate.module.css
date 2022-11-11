@@ -1,0 +1,14 @@
+.productListing {
+    padding: 20px;
+    /* background-color: black; */
+}
+.buttonContainer{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+
+}
+.addButton{
+    float: right;
+    padding: 5px;
+}

@@ -1,0 +1,17 @@
+.categorySelector{
+    padding: 10px;
+    /* width: 100%; */
+}
+.category{
+    word-wrap: normal;
+    width: -webkit-fill-available;
+    text-align: -webkit-center;
+    height: 58px;
+    border-color: lightgrey;
+    border-radius: 4px;
+    margin-top: 7px;
+    color: dimgrey;
+}
+.category:hover{
+    border-color: black;
+}
