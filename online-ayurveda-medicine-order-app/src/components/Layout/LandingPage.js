@@ -15,6 +15,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import LandingPageCardItem from "./LandingPageCardItem";
+import ayurveda1 from '../../assets/LandingPage/ayurveda1.jpg'
+import ayurveda2 from '../../assets/LandingPage/ayurveda2.jpg'
+import ayurveda3 from '../../assets/LandingPage/ayurveda3.jpg'
 
 function Copyright() {
   return (
@@ -29,7 +33,16 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3];
+const cards = [{
+  img:ayurveda1,
+  title:'Better Health'
+}, {
+  img:ayurveda2,
+  title:'Clear Up Energy.'
+}, {
+  img:ayurveda3,
+  title:'Better Health'
+}];
 
 const theme = createTheme();
 
@@ -76,30 +89,7 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: "0%",
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Men's Health
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+              <LandingPageCardItem card={card}/>
             ))}
           </Grid>
         </Container>

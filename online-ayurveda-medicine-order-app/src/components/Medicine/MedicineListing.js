@@ -12,8 +12,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import classes from "./MedicineListing.module.css";
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 const MedicineListing = () => {
   const [medicines, setMedicines] = useState([]);
@@ -40,7 +40,7 @@ const MedicineListing = () => {
   const cartHandler = (item) => {
     dispatch(cartActions.addItem(item));
   };
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState(1);
 
   return (
     <div>
@@ -99,26 +99,26 @@ const MedicineListing = () => {
                         }}
                       >
                         {/* <Typography>Quantity</Typography> */}
-                        
+
                         {/* <Button onChange={()=>setQuantity(e.target.value+1)} size="small" variant="contained" type="submit">
                           +
                         </Button> */}
                         {/* {quantity} */}
                         <div className={classes.inpurField}>
-                        <input
-                        className={classes.input}
-                          onChange={(e) => setQuantity(e.target.value)}
-                          type="number"
-                          placeholder="Quantity"
-                          name="qty"
-                          min="1"
-                        />
-                        {/* <Button onChange={(e)=>setQuantity(e.target.value-1)}   size="small" variant="contained" type="submit">
+                          <input
+                            className={classes.input}
+                            onChange={(e) => setQuantity(e.target.value)}
+                            type="number"
+                            placeholder="Quantity"
+                            name="qty"
+                            min="1"
+                          />
+                          {/* <Button onChange={(e)=>setQuantity(e.target.value-1)}   size="small" variant="contained" type="submit">
                           -
                         </Button> */}
-                        <Button variant="contained" type="submit">
-                          Add to cart
-                        </Button>
+                          <Button variant="contained" type="submit">
+                            Add to cart
+                          </Button>
                         </div>
                       </form>
                     </Button>

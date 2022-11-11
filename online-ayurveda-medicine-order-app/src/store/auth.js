@@ -11,6 +11,7 @@ const authSlice = createSlice({
     login(state) {
       state.isAuth = true;
       localStorage.setItem("isLoggedIn", "1");
+      localStorage.setItem("cartItems", "[]");
     },
     logout(state) {
       state.isAuth = false;

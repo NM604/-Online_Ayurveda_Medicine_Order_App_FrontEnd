@@ -8,11 +8,10 @@ import classes from "./CheckoutCard.module.css";
 
 function CheckoutCard(props) {
   const custId = localStorage.getItem("loggedId");
-  const localStorageCart = JSON.parse(
-    localStorage.getItem("cartItems")
-  );
+  const localStorageCart = JSON.parse(localStorage.getItem("cartItems"));
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [error,setError]=useState('');
   useEffect(() => {
     updateTotalPrice();
   }, []);
@@ -33,45 +32,51 @@ function CheckoutCard(props) {
     return date.toISOString().split("T")[0];
   };
   const orderHandler = () => {
-    let ordDate = new Date();
-    let disDate = new Date();
-    disDate.setDate(disDate.getDate() + 7);
-    ordDate = formatDate(ordDate);
-    disDate = formatDate(disDate);
+    if(totalPrice===0){
+      setError('Cart is empty')
+    }
+    if (totalPrice != 0) {
+      let ordDate = new Date();
+      let disDate = new Date();
+      disDate.setDate(disDate.getDate() + 7);
+      ordDate = formatDate(ordDate);
+      disDate = formatDate(disDate);
 
-    const orderDetailItem = {
-      customer: {
-        customerId: custId,
-      },
-      dispatchDate: disDate,
-      orderDate: ordDate,
-      totalCost: totalPrice,
-    };
+      const orderDetailItem = {
+        customer: {
+          customerId: custId,
+        },
+        dispatchDate: disDate,
+        orderDate: ordDate,
+        totalCost: totalPrice,
+      };
 
-    (async () => {
-      const orderDetailId = await postData(
-        "http://localhost:8080/oam/order-details",
-        orderDetailItem
-      );
-      localStorageCart.map((item) => {
-        const orderItem = {
-          medicine: {
-            medicineId: item.medicineId,
-          },
-          orderDetail: {
-            orderDetailId: orderDetailId,
-          },
-          price: item.price,
-          quantity: item.quantity,
-        };
+      (async () => {
+        const orderDetailId = await postData(
+          "http://localhost:8080/oam/order-details",
+          orderDetailItem
+        );
+        localStorageCart.map((item) => {
+          const orderItem = {
+            medicine: {
+              medicineId: item.medicineId,
+            },
+            orderDetail: {
+              orderDetailId: orderDetailId,
+            },
+            price: item.price,
+            quantity: item.quantity,
+          };
 
-        //postOrderItem(orderItem);
-        postData("http://localhost:8080/oam/order-items", orderItem);
-      });
-    })();
+          //postOrderItem(orderItem);
+          postData("http://localhost:8080/oam/order-items", orderItem);
+        });
+      })();
 
-    dispatch(cartActions.clearCart());
-    setTotalPrice(0);
+      dispatch(cartActions.clearCart());
+      setTotalPrice(0);
+      setError('')
+    }
   };
   const postData = async (url, data) => {
     try {
@@ -91,6 +96,7 @@ function CheckoutCard(props) {
         <Button variant="primary" onClick={orderHandler}>
           Place order
         </Button>
+        <Card.Text>{error}</Card.Text>
       </Card.Body>
     </Card>
   );

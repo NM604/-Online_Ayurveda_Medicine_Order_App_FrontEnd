@@ -65,13 +65,13 @@ const OrderItem = (props) => {
       <td>
         {isCreated && (
           <Button variant="outline-danger" onClick={cancelHandler}>
-            cancel
+            Cancel
           </Button>
         )}
       </td>
       <td>
         <Link to={`/my-orders/${props.id}`}>
-          <Button variant="outline-info">show details</Button>
+          <Button variant="outline-info">Show details</Button>
         </Link>
       </td>
     </tr>
