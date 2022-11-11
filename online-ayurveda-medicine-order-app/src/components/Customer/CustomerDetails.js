@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import CustomerUpdateUtil from "./CustomerUpdateUtil";
 import backendAPI from "../../apis/backendAPI";
-import "../../CSS/profile.css";
+import classes from "./CustomerDetails.module.css";
 
 const CustomerDetails = () => {
   const [customerDetails, setCustomerDetails] = useState({});
@@ -62,7 +62,6 @@ const CustomerDetails = () => {
         </h1><br/>
         <h5 className="details">ID : {customerDetails.customerId}</h5>
         <h5 className="details">Name : {customerDetails.customerName}</h5>
-        <h5 className="details">Password : {customerDetails.customerPassword}</h5>
       </div>
 
       <Button variant="danger" onClick={handleDelete} id="btn">
