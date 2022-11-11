@@ -17,6 +17,7 @@ const authSlice = createSlice({
       state.isAuth = false;
       localStorage.setItem("isLoggedIn", "0");
       localStorage.removeItem("loggedId");
+      localStorage.removeItem("loggedType");
     },
   },
 });

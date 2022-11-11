@@ -17,6 +17,7 @@ import MedicineUpdate from "./components/Medicine/MedicineUpdate";
 import MedicineAdd from "./components/Medicine/MedicineAdd";
 import MedicineUpdateForm from "./components/Medicine/MedicineUpdateForm";
 import Footer from "./components/Layout/Footer";
+import UserProfiles from "./components/Customer/UserProfiles";
 
 function App() {
   return (
@@ -41,9 +42,10 @@ function App() {
             path="/medicine-updateform/:medicineId"
             element={<MedicineUpdateForm />}
           />
+          <Route path="/managecustomer" element={<UserProfiles />} />
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </Router>
   );
 }

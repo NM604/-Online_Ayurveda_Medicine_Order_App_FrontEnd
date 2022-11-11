@@ -15,6 +15,7 @@ function Admin() {
   const auth = useSelector((state) => state.auth.isAuth);
   const id = useSelector((state) => state.userId);
   const [open, setOpen] = useState(false);
+  const [openOther, setOpenOther] = useState(false);
   const [response, setResponse] = useState();
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
@@ -58,9 +59,6 @@ function Admin() {
       });
   };
 
-  //console.log(auth);
-  //console.log(id);
-
   return (
     <div className="container-3">
       <h3>Management Services</h3>
@@ -70,7 +68,6 @@ function Admin() {
             <Card.Title>Profile Details</Card.Title>
             <Card.Text>
               <p>Admin ID: {formValues.id}</p>
-              <p>Password: {formValues.password}</p>
             </Card.Text>
           </Card.Body>
         </Card>
@@ -90,9 +87,31 @@ function Admin() {
           </div>
         </Collapse>
         <div className="buttons">
-          <Button variant="danger" onClick={handleDelete}>
+          <Button
+            variant="danger"
+            onClick={() => setOpenOther(!openOther)}
+            aria-controls="example-collapse"
+            aria-expanded={openOther}
+          >
             Delete Account
           </Button>
+          <Collapse in={openOther}>
+            <div id="example-collapse">
+              <Card style={{ width: "15rem", height: "200px" }}>
+                <Card.Body>
+                  <Card.Title>Delete Account</Card.Title>
+                  <Card.Text>Are you sure you want to delete?</Card.Text>
+                  <Button
+                    variant="primary"
+                    onClick={handleDelete}
+                    style={{ marginRight: "20px" }}
+                  >
+                    Confirm
+                  </Button>
+                </Card.Body>
+              </Card>
+            </div>
+          </Collapse>
         </div>
         <div className="buttons">
           <Button variant="danger" onClick={handleLogout}>

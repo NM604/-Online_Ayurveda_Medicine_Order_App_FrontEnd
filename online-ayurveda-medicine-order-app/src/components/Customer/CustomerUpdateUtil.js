@@ -7,7 +7,7 @@ import classes from "./CustomerUpdateUtil.module.css";
 
 function CustomerUpdateUtil() {
   const initialValues = {
-    customerId: 0,
+    customerId: null,
     customerName: "",
     customerPassword: "",
   };
@@ -64,7 +64,9 @@ function CustomerUpdateUtil() {
         Change Password <Badge bg="success">Customer</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
-        <Form.Label id="input"><b>Customer ID</b></Form.Label>
+        <Form.Label id="input">
+          <b>Customer ID</b>
+        </Form.Label>
         <Form.Control
           type="number"
           name="customerId"
@@ -72,10 +74,14 @@ function CustomerUpdateUtil() {
           value={formValues.customerId}
           onChange={handleChange}
         />
-        <Form.Text className="text" ><b>{formErrors.customerId}</b></Form.Text>
+        <Form.Text className="text">
+          <b>{formErrors.customerId}</b>
+        </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerName">
-        <Form.Label id="input"><b>Username</b></Form.Label>
+        <Form.Label id="input">
+          <b>Username</b>
+        </Form.Label>
         <Form.Control
           type="text"
           name="customerName"
@@ -83,10 +89,14 @@ function CustomerUpdateUtil() {
           value={formValues.customerName}
           onChange={handleChange}
         />
-        <Form.Text className="text" ><b>{formErrors.customerName}</b></Form.Text>
+        <Form.Text className="text">
+          <b>{formErrors.customerName}</b>
+        </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerPassword">
-        <Form.Label id="input"><b>Password</b></Form.Label>
+        <Form.Label id="input">
+          <b>Password</b>
+        </Form.Label>
         <Form.Control
           type="password"
           name="customerPassword"
@@ -94,9 +104,9 @@ function CustomerUpdateUtil() {
           value={formValues.customerPassword}
           onChange={handleChange}
         />
-        <Form.Text className="text" ><b>
-          {formErrors.customerPassword}
-          </b></Form.Text>
+        <Form.Text className="text">
+          <b>{formErrors.customerPassword}</b>
+        </Form.Text>
       </Form.Group>
       <div className="buttons-update">
         <Button variant="primary" onClick={handleUpdate} id="btn">

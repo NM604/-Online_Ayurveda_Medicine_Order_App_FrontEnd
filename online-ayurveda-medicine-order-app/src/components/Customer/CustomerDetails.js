@@ -7,12 +7,13 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import CustomerUpdateUtil from "./CustomerUpdateUtil";
 import backendAPI from "../../apis/backendAPI";
-import classes from "./CustomerDetails.module.css";
+import Card from "react-bootstrap/Card";
 
 const CustomerDetails = () => {
   const [customerDetails, setCustomerDetails] = useState({});
   const id = useSelector((state) => state.userId);
   const [open, setOpen] = useState(false);
+  const [openOther, setOpenOther] = useState(false);
   const [response, setResponse] = useState();
   const [userId, setUserId] = useState();
   const dispatch = useDispatch();
@@ -58,15 +59,38 @@ const CustomerDetails = () => {
   return (
     <div className="container" id="con">
       <div key={customerDetails.customerId} className="cust">
-        <h1>Customer Details
-        </h1><br/>
+        <h1>Customer Details</h1>
+        <br />
         <h5 className="details">ID : {customerDetails.customerId}</h5>
         <h5 className="details">Name : {customerDetails.customerName}</h5>
       </div>
 
-      <Button variant="danger" onClick={handleDelete} id="btn">
+      <Button
+        variant="danger"
+        onClick={() => setOpenOther(!openOther)}
+        aria-controls="example-collapse"
+        aria-expanded={openOther}
+        id="btn"
+      >
         Delete Account
       </Button>
+      <Collapse in={openOther}>
+        <div id="example-collapse">
+          <Card style={{ width: "15rem", height: "200px" }}>
+            <Card.Body>
+              <Card.Title>Delete Account</Card.Title>
+              <Card.Text>Are you sure you want to delete?</Card.Text>
+              <Button
+                variant="primary"
+                onClick={handleDelete}
+                style={{ marginRight: "20px" }}
+              >
+                Confirm
+              </Button>
+            </Card.Body>
+          </Card>
+        </div>
+      </Collapse>
       <div className="buttons">
         <Button
           variant="warning"

@@ -14,7 +14,7 @@ import { userActions } from "../../store/user";
 
 function CustomerLoginUtil() {
   const initialValues = {
-    customerId: 0,
+    customerId: null,
     customerName: "",
     customerPassword: "",
   };

@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 
 function UpdateUtil() {
-  const initialValues = { id: 0, password: "" };
+  const initialValues = { id: null, password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [response, setResponse] = useState();

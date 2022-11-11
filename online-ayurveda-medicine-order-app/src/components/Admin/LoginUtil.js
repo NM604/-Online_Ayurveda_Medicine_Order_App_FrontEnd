@@ -13,7 +13,7 @@ import UpdateUtil from "./UpdateUtil";
 import { userActions } from "../../store/user";
 
 function LoginUtil() {
-  const initialValues = { id: 0, password: "" };
+  const initialValues = { id: null, password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
