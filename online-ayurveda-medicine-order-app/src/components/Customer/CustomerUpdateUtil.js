@@ -3,7 +3,7 @@ import backendAPI from "../../apis/backendAPI";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
-import "../../CSS/custupdate.css";
+import classes from "./CustomerUpdateUtil.module.css";
 
 function CustomerUpdateUtil() {
   const initialValues = {
