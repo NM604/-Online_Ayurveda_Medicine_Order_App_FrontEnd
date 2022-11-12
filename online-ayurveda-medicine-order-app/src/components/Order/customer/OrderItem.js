@@ -46,7 +46,7 @@ const OrderItem = (props) => {
   }
 
   return (
-    <tr>
+    <tr data-testid="order-row">
       <td>{props.id}</td>
       <td>{props.orderDate}</td>
       <td>{props.dispatchDate}</td>
@@ -64,14 +64,14 @@ const OrderItem = (props) => {
       </td>
       <td>
         {isCreated && (
-          <Button variant="outline-danger" onClick={cancelHandler}>
+          <Button aria-label='cancel-btn' variant="outline-danger" onClick={cancelHandler}>
             Cancel
           </Button>
         )}
       </td>
       <td>
         <Link to={`/my-orders/${props.id}`}>
-          <Button variant="outline-info">Show details</Button>
+          <Button aria-label='detail-btn' variant="outline-info">Show details</Button>
         </Link>
       </td>
     </tr>

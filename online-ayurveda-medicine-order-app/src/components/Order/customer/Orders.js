@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/auth";
 import Table from "react-bootstrap/Table";
 import ErrorCard from "../../UI/ErrorCard";
-
+import { fetchCustomerOrder } from "./api/orders";
 
 const Orders = () => {
   const custId = localStorage.getItem("loggedId");
@@ -17,24 +17,40 @@ const Orders = () => {
   }, []);
   const fetchData = async () => {
     try {
-      const data = await axios.get(
-        `http://localhost:8080/oam/order-details/customer/${custId}`
-      );
-      const orderItems = await data.data;
+      const orderItems = await fetchCustomerOrder(custId);
+      console.log("Suc");
       setOrders(orderItems);
       setError();
     } catch (err) {
+      console.log("err");
       setError(err);
     }
+    // if(orderItems.orderDetailId){
+    //   setOrders(orderItems);
+    //   setError();
+    // }else{
+    //   setError(orderItems);
+    // }
+    // try {
+    //   const data = await axios.get(
+    //     `http://localhost:8080/oam/order-details/customer/${custId}`
+    //   );
+    //   const orderItems = await data.data;
+    //   console.log(orderItems);
+    //   setOrders(orderItems);
+    //   setError();
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
   return (
     <section className={classes["order-container"]}>
-      <div className={classes["order-header"]}>
+      <div data-testid="order-header" className={classes["order-header"]}>
         <h1>My Orders</h1>
       </div>
-      {error && <ErrorCard error={error}/>}
+      {error && <ErrorCard data-testid="order-error" error={error} />}
       {!error && (
-        <div className={classes["order-items"]}>
+        <div data-testid="orders-list" className={classes["order-items"]}>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -57,6 +73,7 @@ const Orders = () => {
               )}
               {orders.map((order) => (
                 <OrderItem
+                  data-testid="order-item"
                   key={order.orderDetailId}
                   id={order.orderDetailId}
                   cost={order.totalCost}

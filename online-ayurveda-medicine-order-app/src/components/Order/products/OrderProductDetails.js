@@ -12,6 +12,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import {fetchOrderMedicines} from './api/products'
 
 const OrderProductDetails = () => {
   const [orderItem, setOrderItem] = useState([]);
@@ -39,14 +40,21 @@ const OrderProductDetails = () => {
   }, [orderItem]);
   const fetchData = async () => {
     try {
-      const data = await axios.get(
-        `http://localhost:8080/oam/order-items/order-details/${id}`
-      );
-      const orderItems = await data.data;
+      const orderItems = await fetchOrderMedicines(id);
       setOrderItem(orderItems);
+      setError();
     } catch (err) {
       setError(err);
     }
+    // try {
+    //   const data = await axios.get(
+    //     `http://localhost:8080/oam/order-items/order-details/${id}`
+    //   );
+    //   const orderItems = await data.data;
+    //   setOrderItem(orderItems);
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
   console.log(orderItem);
   return (
@@ -54,7 +62,7 @@ const OrderProductDetails = () => {
       data-testid="section"
       className={classes["order-product-container"]}
     >
-      <div className={classes["order-product-header"]}>
+      <div data-testid="medicine-details-header" className={classes["order-product-header"]}>
         <h1 data-testid="header">Ordered Products</h1>
       </div>
       <div className={classes["order-product-items"]}>
