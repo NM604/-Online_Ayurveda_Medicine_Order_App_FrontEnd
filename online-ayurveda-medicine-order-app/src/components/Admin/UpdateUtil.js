@@ -51,8 +51,8 @@ function UpdateUtil() {
   };
 
   return (
-    <Form>
-      <h2>
+    <Form data-testid="update-form-2">
+      <h2 data-testid="admin-header-2">
         Change Password <Badge bg="success">Admin</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="id">
@@ -78,7 +78,11 @@ function UpdateUtil() {
         <Form.Text className="text-muted">{formErrors.password}</Form.Text>
       </Form.Group>
       <div className="buttons-update">
-        <Button variant="primary" onClick={handleUpdate}>
+        <Button
+          variant="primary"
+          aria-label="update-button-2"
+          onClick={handleUpdate}
+        >
           Update
         </Button>
       </div>

@@ -11,6 +11,7 @@ import Badge from "react-bootstrap/Badge";
 import Collapse from "react-bootstrap/Collapse";
 import UpdateUtil from "./UpdateUtil";
 import { userActions } from "../../store/user";
+import { history } from "../../utilities/history";
 
 function LoginUtil() {
   const initialValues = { id: null, password: "" };
@@ -102,8 +103,8 @@ function LoginUtil() {
   };
 
   return (
-    <Form>
-      <h2>
+    <Form data-testid="admin-login-form">
+      <h2 data-testid="admin-header-1">
         Login or Signup <Badge bg="success">Admin</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="id">
@@ -125,6 +126,7 @@ function LoginUtil() {
           placeholder="Enter password"
           value={formValues.password}
           onChange={handleChange}
+          data-testid="admin-login-form-password-field"
         />
         <Form.Text className="text-muted">{formErrors.password}</Form.Text>
         {Object.keys(formErrors).length === 0 && isSubmit ? (
@@ -134,12 +136,20 @@ function LoginUtil() {
         )}
       </Form.Group>
       <div className="buttons">
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          aria-label="submit-button"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </div>
       <div className="buttons">
-        <Button variant="secondary" onClick={handleClick}>
+        <Button
+          variant="secondary"
+          aria-label="register-button"
+          onClick={handleClick}
+        >
           Sign Up as Admin
         </Button>
       </div>
@@ -149,12 +159,13 @@ function LoginUtil() {
           onClick={() => setOpen(!open)}
           aria-controls="example-collapse-text"
           aria-expanded={open}
+          aria-label="update-button"
         >
           Forgot password
         </Button>
       </div>
       <Collapse in={open}>
-        <div id="example-collapse-text">
+        <div id="example-collapse-text" data-testid="update-form">
           <UpdateUtil />
         </div>
       </Collapse>

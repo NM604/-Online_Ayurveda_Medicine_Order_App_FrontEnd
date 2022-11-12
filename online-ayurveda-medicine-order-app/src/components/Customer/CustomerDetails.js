@@ -39,7 +39,7 @@ const CustomerDetails = () => {
     if (storedUserLoggedInfo === "0") {
       navigate("/customer/login");
     }
-    //setUserId(localStorage.getItem("loggedId"));
+    setUserId(localStorage.getItem("loggedId"));
     fetchCustomerDetails();
   }, [userId]);
 
@@ -57,9 +57,9 @@ const CustomerDetails = () => {
   };
 
   return (
-    <div className="container" id="con">
+    <div className="container" data-testid="customer-container" id="con">
       <div key={customerDetails.customerId} className="cust">
-        <h1>Customer Details</h1>
+        <h1 data-testid="customer-header-1">Customer Details</h1>
         <br />
         <h5 className="details">ID : {customerDetails.customerId}</h5>
         <h5 className="details">Name : {customerDetails.customerName}</h5>
@@ -71,6 +71,7 @@ const CustomerDetails = () => {
         aria-controls="example-collapse"
         aria-expanded={openOther}
         id="btn"
+        aria-label="customer-button"
       >
         Delete Account
       </Button>
@@ -84,6 +85,7 @@ const CustomerDetails = () => {
                 variant="primary"
                 onClick={handleDelete}
                 style={{ marginRight: "20px" }}
+                aria-label="popup-button"
               >
                 Confirm
               </Button>
@@ -98,6 +100,7 @@ const CustomerDetails = () => {
           aria-controls="example-collapse-text"
           aria-expanded={open}
           id="btn1"
+          aria-label="customer-button"
         >
           Update Password
         </Button>
@@ -107,7 +110,12 @@ const CustomerDetails = () => {
           <CustomerUpdateUtil />
         </div>
       </Collapse>
-      <Button variant="primary" onClick={handleLogout} id="btn2">
+      <Button
+        variant="primary"
+        aria-label="customer-button"
+        onClick={handleLogout}
+        id="btn2"
+      >
         Logout
       </Button>
     </div>

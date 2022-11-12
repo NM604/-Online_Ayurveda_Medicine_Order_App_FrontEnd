@@ -60,10 +60,10 @@ function Admin() {
   };
 
   return (
-    <div className="container-3">
-      <h3>Management Services</h3>
+    <div className="container-3" data-testid="admin-container">
+      <h3 data-testid="admin-header-1">Management Services</h3>
       <div className="item-1">
-        <Card style={{ width: "18rem" }}>
+        <Card testID="profile-card" style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>Profile Details</Card.Title>
             <Card.Text>
@@ -77,12 +77,13 @@ function Admin() {
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"
             aria-expanded={open}
+            aria-label="admin-button"
           >
             Update Password
           </Button>
         </div>
         <Collapse in={open}>
-          <div id="example-collapse-text">
+          <div id="example-collapse-text" data-testid="admin-update-card">
             <UpdateUtil />
           </div>
         </Collapse>
@@ -92,11 +93,12 @@ function Admin() {
             onClick={() => setOpenOther(!openOther)}
             aria-controls="example-collapse"
             aria-expanded={openOther}
+            aria-label="admin-button"
           >
             Delete Account
           </Button>
           <Collapse in={openOther}>
-            <div id="example-collapse">
+            <div id="example-collapse" data-testid="admin-delete-card">
               <Card style={{ width: "15rem", height: "200px" }}>
                 <Card.Body>
                   <Card.Title>Delete Account</Card.Title>
@@ -105,6 +107,7 @@ function Admin() {
                     variant="primary"
                     onClick={handleDelete}
                     style={{ marginRight: "20px" }}
+                    aria-label="popup-button"
                   >
                     Confirm
                   </Button>
@@ -114,13 +117,17 @@ function Admin() {
           </Collapse>
         </div>
         <div className="buttons">
-          <Button variant="danger" onClick={handleLogout}>
+          <Button
+            variant="danger"
+            aria-label="admin-button"
+            onClick={handleLogout}
+          >
             Logout
           </Button>
         </div>
       </div>
       <div className="items">
-        <div className="item">
+        <div className="item" data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
               className="photo"
@@ -138,19 +145,21 @@ function Admin() {
                 variant="primary"
                 onClick={() => navigate("/updateMedicine")}
                 style={{ marginRight: "20px" }}
+                aria-label="card-button"
               >
                 View/Modify
               </Button>
               <Button
                 variant="primary"
                 onClick={() => navigate("/addMedicines")}
+                aria-label="card-button"
               >
                 Add
               </Button>
             </Card.Body>
           </Card>
         </div>
-        <div className="item">
+        <div className="item" data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
               className="photo"
@@ -165,15 +174,16 @@ function Admin() {
               </Card.Text>
               <Button
                 variant="primary"
-                onClick={() => navigate("/manageorders")}
+                onClick={() => navigate("/admin/orders")}
                 style={{ marginTop: "50px" }}
+                aria-label="card-button"
               >
                 Update
               </Button>
             </Card.Body>
           </Card>
         </div>
-        <div className="item">
+        <div className="item" data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
               className="photo"
@@ -190,6 +200,7 @@ function Admin() {
                 variant="primary"
                 onClick={() => navigate("/managecustomer")}
                 style={{ marginTop: "50px" }}
+                aria-label="card-button"
               >
                 Delete
               </Button>

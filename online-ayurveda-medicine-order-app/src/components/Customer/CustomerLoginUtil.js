@@ -96,7 +96,7 @@ function CustomerLoginUtil() {
       errors.customerId = "ID is required!";
     }
     if (!values.customerName) {
-      errors.customerName = "Email is required!";
+      errors.customerName = "Username is required!";
     }
     if (!values.customerPassword) {
       errors.customerPassword = "Password is required";
@@ -110,8 +110,8 @@ function CustomerLoginUtil() {
   };
 
   return (
-    <Form>
-      <h2>
+    <Form data-testid="customer-login-form">
+      <h2 data-testid="customer-header-1">
         Login or Signup <Badge bg="success">Customer</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
@@ -155,12 +155,20 @@ function CustomerLoginUtil() {
         )}
       </Form.Group>
       <div className="buttons">
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          aria-label="submit-button"
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
       </div>
       <div className="buttons">
-        <Button variant="secondary" onClick={handleClick}>
+        <Button
+          variant="secondary"
+          aria-label="register-button"
+          onClick={handleClick}
+        >
           Sign Up!
         </Button>
       </div>
@@ -170,12 +178,13 @@ function CustomerLoginUtil() {
           onClick={() => setOpen(!open)}
           aria-controls="example-collapse-text"
           aria-expanded={open}
+          aria-label="update-button"
         >
           Forgot password
         </Button>
       </div>
       <Collapse in={open}>
-        <div id="example-collapse-text">
+        <div id="example-collapse-text" data-testid="update-form">
           <CustomerUpdateUtil />
         </div>
       </Collapse>

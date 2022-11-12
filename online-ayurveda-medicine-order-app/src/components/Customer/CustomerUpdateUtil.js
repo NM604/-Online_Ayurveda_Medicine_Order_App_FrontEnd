@@ -59,8 +59,8 @@ function CustomerUpdateUtil() {
   };
 
   return (
-    <Form>
-      <h2 id="head">
+    <Form data-testid="update-form-2">
+      <h2 id="head" data-testid="customer-header-2">
         Change Password <Badge bg="success">Customer</Badge>
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
@@ -109,7 +109,12 @@ function CustomerUpdateUtil() {
         </Form.Text>
       </Form.Group>
       <div className="buttons-update">
-        <Button variant="primary" onClick={handleUpdate} id="btn">
+        <Button
+          variant="primary"
+          aria-label="update-button-2"
+          onClick={handleUpdate}
+          id="btn"
+        >
           Update
         </Button>
       </div>
