@@ -20,3 +20,14 @@
     flex-direction: column;
     gap: 2px;
 }
+.addCategory{
+    /* float:inline-start; */
+}
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.addCategory{
+    width: 200px;
+}
