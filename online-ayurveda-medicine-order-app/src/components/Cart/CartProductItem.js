@@ -36,7 +36,7 @@ const CartProductItem = (props) => {
       <td>{props.quantity*props.price}</td>
       <td>
         <Button variant="danger" onClick={removeHandler}>
-          remove
+          Remove
         </Button>
       </td>
     </tr>

@@ -102,7 +102,7 @@ const CartProducts = () => {
                 <th>Medicine name</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th>Total price</th>
+                <th>Sub total</th>
                 <th>Actions</th>
               </tr>
             </thead>
