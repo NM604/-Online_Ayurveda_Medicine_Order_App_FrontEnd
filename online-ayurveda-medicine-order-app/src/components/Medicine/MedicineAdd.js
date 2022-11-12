@@ -13,6 +13,7 @@ import {
   AlertTitle,
   // Select,
 } from "@mui/material";
+import backendAPI from "../../apis/backendAPI";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -45,15 +46,14 @@ function MedicineAdd() {
     categoryName: "",
   });
 
-  const [formErrors, setFormErrors] = useState({});
-  const [categoryFormErrors, setCategoryFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({error:false});
+  const [categoryFormErrors, setCategoryFormErrors] = useState({error:false});
   const [isSubmit, setIsSubmit] = useState(false);
   const [isCategorySubmit, setIsCategorySubmit] = useState(false);
 
   const [categoryNameList, setCategoryNameList] = useState([{}]);
   const [response, setResponse] = useState();
-  const [message, setMessage] = useState("");
-  // const [categoryName, setCategoryName] = useState();
+
 
   useEffect(() => {
     fetchCategory();
@@ -61,8 +61,8 @@ function MedicineAdd() {
 
   const fetchCategory = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/oam/userinterface/category"
+      const response = await backendAPI.get(
+        "/oam/userinterface/category"
       );
       setCategoryNameList(response.data);
       console.log(response.data);
@@ -105,7 +105,7 @@ function MedicineAdd() {
 
   const addCategory = async () => {
     try {
-      await axios.post("http://localhost:8080/oam/userinterface/category", {
+      await backendAPI.post("/oam/userinterface/category", {
         categoryName: categoryForm.categoryName,
       });
     } catch (error) {
@@ -138,7 +138,7 @@ function MedicineAdd() {
    
     setCategoryFormErrors(validateCategory(categoryForm));
     console.log(categoryFormErrors);
-    if (categoryFormErrors.error === false){
+    if (formErrors.error === false){
       addCategory();
     console.log("category added !!!");
     setIsCategorySubmit(true);
@@ -153,29 +153,28 @@ function MedicineAdd() {
     setFormErrors(validate(formValues));
     console.log(formErrors);
 
-    // if (JSON.stringify(formErrors) === JSON.stringify({})){
-    addmed();
-    console.log("added!!!");
+    if (formErrors.error === false){
+      addmed();
+      console.log("added!!!");
+      setIsSubmit(true);
+  
+    }
 
-    setIsSubmit(true);
-    // if (JSON.stringify(formErrors) === JSON.stringify({})){
-    //   setMessage("medine updated succesfully");
-    // }
-    // <Alert severity="success">("Medicine Added !!!")</Alert>
-    // }
-    // else{
-
-    // }
-    // addmed();
-    // console.log("added!!!");
-    // alert("Medicine Added !!!")
+    
+    
   };
 
   const validateCategory = (values) => {
     console.log("validating Category!!!");
     const categoryErrors = { error: false };
+    const letters = /^[A-Za-z]+$/;
+    
     if (!values.categoryName) {
       categoryErrors.categoryName = "Category name Required!";
+      categoryErrors.error = true;
+    }
+    else if(!letters.test(values.categoryName.toLowerCase())){
+      categoryErrors.categoryName = "Category name cannot have digits!";
       categoryErrors.error = true;
     }
     console.log(categoryErrors);
@@ -185,7 +184,10 @@ function MedicineAdd() {
   const validate = (values) => {
     console.log("validating!!!");
     const errors = { error: false };
-    const today = new Date();
+
+    const letters = /^[a-z]+$/;
+    const numbers = /^[0-9]+$/;
+
     // const regex = [0-9]+;
     if (!values.medicineName) {
       errors.medicineName = "Medicine name is required!";
@@ -195,43 +197,33 @@ function MedicineAdd() {
       errors.companyName = "Company name is required!";
       errors.error = true;
     }
+    else if(!letters.test(values.companyName.toLowerCase())){
+      errors.companyName = "Company name cannot have digits!";
+      errors.error = true;
+    }
     if (!values.mfd) {
       errors.mfd = "Manufacturing date is required!";
       errors.error = true;
-    } else if (values.mfd >= today) {
-      errors.mfd = "Manufacturing date cannot be future!";
-      errors.error = true;
-    }
+    } 
 
     if (!values.expiryDate) {
       errors.expiryDate = "Expiry date is required!";
       errors.error = true;
-    } else if (values.expiryDate >= today) {
-      errors.expiryDate = "Expiry date cannot be in past!";
-      errors.error = true;
-    }
+    } 
     if (!values.medicineCost) {
       errors.medicineCost = "Medicine cost is required!";
       errors.error = true;
     } else if (values.medicineCost <= 0) {
       errors.medicineCost = "Medicine cost should be more than 0!";
       errors.error = true;
+    } else if(!numbers.test(values.medicineCost)){
+      errors.medicineCost = "Medicine cost field cannot have letters!";
+      errors.error = true;
     }
     console.log(errors);
     return errors;
   };
 
-  // const disableDate = () =>{
-  //   var today,dd,mm,yyyy;
-  //   today = new Date();
-  //   mm =today.getMonth+1;
-  //   // console.log(mm)
-  //   dd = today.getDate+1;
-  //   yyyy= today.getFullYear();
-  //   console.log(yyyy+"-"+mm+"-"+dd);
-  //   return yyyy+"-"+mm+"-"+dd;
-
-  // }
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
   };
@@ -340,34 +332,6 @@ function MedicineAdd() {
                       >
                         <option value="">Category</option>
 
-                        {/* <option onSelect={handleClickOpen} value="">
-                          other
-                        </option>
-                        <Dialog open={open} onClose={handleClose}>
-                          <DialogTitle>Subscribe</DialogTitle>
-                          <DialogContent>
-                            <DialogContentText>
-                              To subscribe to this website, please enter your
-                              email address here. We will send updates
-                              occasionally.
-                            </DialogContentText>
-                            <TextField
-                              autoFocus
-                              margin="dense"
-                              onChange={handleChangeCategory}
-                              id="categoryName"
-                              value={categoryForm.categoryName}
-                              label="Category Name"
-                              type="text"
-                              fullWidth
-                              variant="standard"
-                            />
-                          </DialogContent>
-                          <DialogActions>
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button onClick={handleClose}>Subscribe</Button>
-                          </DialogActions>
-                        </Dialog> */}
 
                         {categoryNameList.map((category) => (
                           <option
@@ -434,24 +398,24 @@ function MedicineAdd() {
                 <br />
                 {/* <AlertTitle>Error</AlertTitle> */}
                 <div className={classes.errors}>
-                  {isSubmit === true && formErrors.error === false && (
+                  {isSubmit===true && formErrors.error === false && (
                     <Alert severity="success">Medicine added !!!</Alert>
                   )}
 
-                  {isSubmit === true && formErrors.medicineName && (
+                  {formErrors.medicineName && (
                     <Alert severity="error">{formErrors.medicineName}</Alert>
                   )}
-                  {isSubmit === true && formErrors.medicineCost && (
+                  {formErrors.medicineCost && (
                     <Alert severity="error">{formErrors.medicineCost}</Alert>
                   )}
-                  {isSubmit === true && formErrors.companyName && (
+                  {formErrors.companyName && (
                     <Alert severity="error">{formErrors.companyName}</Alert>
                   )}
 
-                  {isSubmit === true && formErrors.mfd && (
+                  {formErrors.mfd && (
                     <Alert severity="error">{formErrors.mfd}</Alert>
                   )}
-                  {isSubmit === true && formErrors.expiryDate && (
+                  {formErrors.expiryDate && (
                     <Alert severity="error">{formErrors.expiryDate}</Alert>
                   )}
                 </div>
@@ -463,85 +427,7 @@ function MedicineAdd() {
         </Grid>
       </div>
 
-      {/* <form onSubmit={handleSubmit}>
-        <h1>Add medicine</h1>
-        <div className="ui divider"></div>
-        <div className="field">
-          <label>Choose Category</label>
-          <select
-            name="categoryName"
-            value={formValues.categoryDTO.categoryName}
-            onChange={onChangeCategory}
-          >
-            <option value="">Choose Category</option>
-            {categoryNameList.map((category) => (
-              <option value={category.categoryName} key={category.categoryId}>
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="ui form">
-          <div className="field">
-            <label>Medicine Name</label>
-            <input
-              type="text"
-              name="medicineName"
-              placeholder="Medicine Name"
-              value={formValues.medicineName}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.medicineName}</p>
-          <div className="field">
-            <label>Company Name</label>
-            <input
-              type="text"
-              name="companyName"
-              placeholder="Company Name"
-              value={formValues.companyName}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.companyName}</p>
-          <p>{formErrors.username}</p>
-          <div className="field">
-            <label>Medicine Cost</label>
-            <input
-              type="text"
-              name="medicineCost"
-              placeholder="Medicine Cost"
-              value={formValues.medicineCost}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.medicineCost}</p>
-          <div className="field">
-            <label>Manufacturing Date</label>
-            <input
-              type="date"
-              name="mfd"
-              placeholder="Manufacturing Date"
-              value={formValues.mfd}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.mfd}</p>
-          <div className="field">
-            <label>Expiry Date</label>
-            <input
-              type="date"
-              name="expiryDate"
-              placeholder="Expiry Date"
-              value={formValues.expiryDate}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.expiryDate}</p>
-
-          <button className="fluid ui button blue">Submit</button>
-        </div>
-      </form> */}
+   
     </div>
   );
 }

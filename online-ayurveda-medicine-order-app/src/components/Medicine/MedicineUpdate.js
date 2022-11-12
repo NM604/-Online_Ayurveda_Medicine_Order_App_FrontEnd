@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
@@ -24,6 +23,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import backendAPI from "../../apis/backendAPI";
+
 
 const theme = createTheme({
   typography: {
@@ -59,8 +60,8 @@ const MedicineUpdate = () => {
   // axios.get("http://localhost:8080/oam/userinterface/medicine"
   const fetchMedicines = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/oam/userinterface/medicine"
+      const response = await backendAPI.get(
+        "/oam/userinterface/medicine"
       );
       setMedicines(response.data);
       console.log(response);
@@ -75,9 +76,9 @@ const MedicineUpdate = () => {
 
   const deleteMedicine = async (medicineId) => {
     try {
-      await axios
+      await backendAPI
         .delete(
-          `http://localhost:8080/oam/userinterface/medicine/${medicineId}`
+          `/oam/userinterface/medicine/${medicineId}`
         )
         .then((res) => {
           console.log("deleted!!!", res);
@@ -169,8 +170,13 @@ const MedicineUpdate = () => {
                         Delete
                       </Button>
                       <Dialog
-                      // PaperProps={{backgroundColor: 'transparent', boxShadow:'none'}}
-                      // overlayStyle={{backgroundColor: 'transparent'}}
+                      type="paper"
+                      PaperProps={{
+                        style: {
+                          // backgroundColor: "transparent",
+                          boxShadow: "none"
+                        },
+                      }}
                         open={open}
                         onClose={handleClose}
                         aria-labelledby="alert-dialog-title"
@@ -195,7 +201,7 @@ const MedicineUpdate = () => {
                             Delete
                           </Button>
                         </DialogActions>
-                      </Dialog>
+                      </Dialog >
                     </ThemeProvider >
                     {/* <div>    </div> */}
                     {/* <br/><br/> */}

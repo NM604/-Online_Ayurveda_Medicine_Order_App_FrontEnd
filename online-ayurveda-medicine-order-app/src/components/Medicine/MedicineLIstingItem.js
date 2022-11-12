@@ -5,10 +5,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../store/cart";
+import backendAPI from "../../apis/backendAPI";
+
 
 import classes from "./MedicineListing.module.css";
 

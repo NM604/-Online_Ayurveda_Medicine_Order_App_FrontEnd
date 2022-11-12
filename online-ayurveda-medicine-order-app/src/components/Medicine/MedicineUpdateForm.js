@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Alert from '@mui/material/Alert';
 
 import classes from "./MedicineAdd.module.css";
@@ -14,24 +13,13 @@ import {
   Typography,
   // Select,
 } from "@mui/material";
-
-
-
-
-
-
-
-
-
-
-
-
+import backendAPI from "../../apis/backendAPI";
 
 
 function MedicineUpdateForm() {
   const { medicineId } = useParams();
   const [medicine, setMedicine] = useState({});
-  const [formErrors,setFormErrors] = useState({});
+  const [formErrors,setFormErrors] = useState({error:false});
   const [isSubmit,setIsSubmit] = useState(false);
   const [formValues, setFormValues] = useState({
     categoryDTO: { categoryId: 1, categoryName: "hair" },
@@ -53,8 +41,8 @@ function MedicineUpdateForm() {
 
   const fetchMedicine = async () => {
     try {
-      const res = await axios
-        .get(`http://localhost:8080/oam/userinterface/medicine/${medicineId}`)
+      const res = await backendAPI
+        .get(`/oam/userinterface/medicine/${medicineId}`)
         // .then((res) => console.log("fetched!!!", res.data));
         // console.log(res.data);
         setMedicine(res.data);
@@ -70,25 +58,11 @@ function MedicineUpdateForm() {
     setFormValues(newdata);
     console.log(newdata);
     
-    // const { name, value } = e.target;
-    // setFormValues({ ...formValues, [name]: value });
-    // console.log(formValues);
   };
-  // {
-  //   medicineId: 11,
-  //   medicineName: "giloyi",
-  //   medicineCost: 499,
-  //   mfd: "2021-10-02",
-  // expiryDate: "2023-10-02",
-  //   companyName: "abcd",
-  //   categoryDTO: {
-  //     categoryId: 1,
-  //     categoryName: "hair"
-  //   }
-  // }
+
   const updateMedicine = async () =>{
     try{
-      const res = await axios.put(`http://localhost:8080/oam/userinterface/medicine`,{
+      const res = await backendAPI.put(`/oam/userinterface/medicine`,{
         medicineId: medicine.medicineId,
         categoryDTO: formValues.categoryDTO,
         companyName: formValues.companyName,
@@ -108,9 +82,12 @@ function MedicineUpdateForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    updateMedicine();
-    console.log("Updated!!!")
-    setIsSubmit(true);
+    if (formErrors.error === false){
+      updateMedicine();
+      console.log("Updated!!!")
+      setIsSubmit(true);
+    }
+    
 
     
   };
@@ -157,41 +134,7 @@ function MedicineUpdateForm() {
     console.log(errors);
     return errors;
   };
-  // const validate = (values) => {
 
-  //   console.log("validating!!!")
-  //   const errors = {};
-  //   const today = new Date();
-  //   // const regex = [0-9]+;
-  //   if (!values.medicineName) {
-  //     errors.medicineName = "medicine name is required!";
-
-  //   }
-  //   if (!values.companyName) {
-  //     errors.companyName = "company name is required!";
-  //   }
-  //   if (!values.mfd) {
-  //     errors.mfd = "manufacturing date is required!";
-  //   }
-  //   else if (values.mfd >= today ){
-  //     errors.mfd = "manufacturing date cannot be future!";
-  //   }
-    
-  //   if (!values.expiryDate) {
-  //     errors.expiryDate = "expiry date is required!";
-  //   }
-  //   else if (values.expiryDate  >= today ){
-  //     errors.expiryDate = "expiry date cannot be in past!";
-  //   }
-  //   if (!values.medicineCost) {
-  //     errors.medicineCost = "medicine cost is required!";
-  //   }
-  //   else if (values.medicineCost<= 0) {
-  //     errors.medicineCost = "medicine cost should be more than 0!";
-  //   }
-  //   console.log(errors);
-  //   return errors;
-  // };
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
   };
@@ -212,23 +155,7 @@ function MedicineUpdateForm() {
                 <Grid container spacing={1}>
                   
                   <Grid xs={12} item>
-                    {/* <div className="categorySelector">
-                    <select className= {classes.category}
-                      name="categoryName"
-                      value={formValues.categoryDTO.categoryName}
-                      onChange={onChangeCategory}
-                    >
-                      <option value="">Choose Category</option>
-                      {categoryNameList.map((category) => (
-                        <option
-                          value={category.categoryName}
-                          key={category.categoryId}
-                        >
-                          {category.categoryName}
-                        </option>
-                      ))}
-                    </select>
-                    </div> */}
+ 
                   </Grid>
                   <Grid xs={12} sm={8} item>
                     <TextField
@@ -362,12 +289,12 @@ function MedicineUpdateForm() {
                   isSubmit===true && formErrors.error===false && <Alert severity="success">Medicine updated !!!</Alert>
                 }
 
-                {isSubmit===true && formErrors.medicineName &&  <Alert severity="error">{formErrors.medicineName}</Alert>}
-                {isSubmit===true && formErrors.medicineCost &&  <Alert severity="error">{formErrors.medicineCost}</Alert>}
-                {isSubmit===true && formErrors.companyName &&  <Alert severity="error">{formErrors.companyName}</Alert>}
+                { formErrors.medicineName &&  <Alert severity="error">{formErrors.medicineName}</Alert>}
+                { formErrors.medicineCost &&  <Alert severity="error">{formErrors.medicineCost}</Alert>}
+                { formErrors.companyName &&  <Alert severity="error">{formErrors.companyName}</Alert>}
                 
-                {isSubmit===true && formErrors.mfd &&  <Alert severity="error">{formErrors.mfd}</Alert>}
-                {isSubmit===true && formErrors.expiryDate &&  <Alert severity="error">{formErrors.expiryDate}</Alert>}
+                { formErrors.mfd &&  <Alert severity="error">{formErrors.mfd}</Alert>}
+                { formErrors.expiryDate &&  <Alert severity="error">{formErrors.expiryDate}</Alert>}
                 </div>
               </form>
             </CardContent>
