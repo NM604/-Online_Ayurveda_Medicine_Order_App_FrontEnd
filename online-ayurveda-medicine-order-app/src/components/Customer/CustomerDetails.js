@@ -8,6 +8,7 @@ import Collapse from "react-bootstrap/Collapse";
 import CustomerUpdateUtil from "./CustomerUpdateUtil";
 import backendAPI from "../../apis/backendAPI";
 import Card from "react-bootstrap/Card";
+import classes from "./CustomerDetails.css";
 
 const CustomerDetails = () => {
   const [customerDetails, setCustomerDetails] = useState({});
