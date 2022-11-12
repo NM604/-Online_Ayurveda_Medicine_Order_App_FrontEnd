@@ -55,7 +55,7 @@ const MedicineLIstingItem = (props) => {
               By {companyName}
             </Typography>
             <Typography align="center" variant="h6" color="text.secondary">
-              $ {medicineCost}
+              ₹ {medicineCost}
             </Typography>
           </CardContent>
           <CardActions>

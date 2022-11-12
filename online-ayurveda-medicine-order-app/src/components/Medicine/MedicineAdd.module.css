@@ -15,3 +15,8 @@
 .category:hover{
     border-color: black;
 }
+.errors{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}

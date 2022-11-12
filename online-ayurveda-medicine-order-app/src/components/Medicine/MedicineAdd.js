@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import classes from "./MedicineAdd.module.css";
-import Alert from "@mui/material/Alert";
+import Alert from '@mui/material/Alert';
 import {
   Grid,
   TextField,
@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   Typography,
+  AlertTitle,
   // Select,
 } from "@mui/material";
 import { LocalFireDepartment } from "@mui/icons-material";
@@ -27,11 +28,12 @@ function MedicineAdd() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [categoryNameList, setCategoryNameList] = useState([{}]);
   const [response, setResponse] = useState();
-  const [message, setMessage] = useState("");
+  const[message,setMessage] = useState("");
   // const [categoryName, setCategoryName] = useState();
 
   useEffect(() => {
     fetchCategory();
+
   }, []);
 
   const fetchCategory = async () => {
@@ -58,12 +60,17 @@ function MedicineAdd() {
     console.log(newdata);
   };
   const handleChange = (e) => {
+    // setFormErrors(validate(formValues))
     const newdata = { ...formValues };
     newdata[e.target.name] = e.target.value;
+    console.log(newdata)
+    // setFormErrors(validate(formValues))
     setFormValues(newdata);
-
+    
     console.log(newdata);
+    // setFormErrors(validate(formValues))
   };
+  
 
   const addmed = async () => {
     try {
@@ -83,6 +90,7 @@ function MedicineAdd() {
         });
     } catch (error) {
       console.log(error);
+
     }
   };
 
@@ -90,11 +98,11 @@ function MedicineAdd() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     console.log(formErrors);
-
+    
     // if (JSON.stringify(formErrors) === JSON.stringify({})){
     addmed();
     console.log("added!!!");
-
+    
     setIsSubmit(true);
     // if (JSON.stringify(formErrors) === JSON.stringify({})){
     //   setMessage("medine updated succesfully");
@@ -107,54 +115,73 @@ function MedicineAdd() {
     // addmed();
     // console.log("added!!!");
     // alert("Medicine Added !!!")
+    
   };
 
   const validate = (values) => {
-    console.log("validating!!!");
-    const errors = {};
+
+    console.log("validating!!!")
+    const errors = {error:false};
     const today = new Date();
     // const regex = [0-9]+;
     if (!values.medicineName) {
-      errors.medicineName = "medicine name is required!";
+      errors.medicineName = "Medicine name is required!";
+      errors.error = true;
+
     }
     if (!values.companyName) {
-      errors.companyName = "company name is required!";
+      errors.companyName = "Company name is required!";
+      errors.error = true;
     }
     if (!values.mfd) {
-      errors.mfd = "manufacturing date is required!";
-    } else if (values.mfd >= today) {
-      errors.mfd = "manufacturing date cannot be future!";
+      errors.mfd = "Manufacturing date is required!";
+      errors.error = true;
     }
-
+    else if (values.mfd >= today ){
+      errors.mfd = "Manufacturing date cannot be future!";
+      errors.error = true;
+    }
+    
     if (!values.expiryDate) {
-      errors.expiryDate = "expiry date is required!";
-    } else if (values.expiryDate >= today) {
-      errors.expiryDate = "expiry date cannot be in past!";
+      errors.expiryDate = "Expiry date is required!";
+      errors.error = true;
+    }
+    else if (values.expiryDate  >= today ){
+      errors.expiryDate = "Expiry date cannot be in past!";
+      errors.error = true;
     }
     if (!values.medicineCost) {
-      errors.medicineCost = "medicine cost is required!";
-    } else if (values.medicineCost <= 0) {
-      errors.medicineCost = "medicine cost should be more than 0!";
+      errors.medicineCost = "Medicine cost is required!";
+      errors.error = true;
+    }
+    else if (values.medicineCost<= 0) {
+      errors.medicineCost = "Medicine cost should be more than 0!";
+      errors.error = true;
     }
     console.log(errors);
     return errors;
   };
 
-  const disableDate = () => {
-    var today, dd, mm, yyyy;
-    today = new Date();
-    mm = today.getMonth + 1;
-    dd = today.getDate + 1;
-    yyyy = today.getFullYear();
-    return yyyy + "-" + mm + "-" + dd;
-  };
+  // const disableDate = () =>{
+  //   var today,dd,mm,yyyy;
+  //   today = new Date();
+  //   mm =today.getMonth+1;
+  //   // console.log(mm)
+  //   dd = today.getDate+1;
+  //   yyyy= today.getFullYear();
+  //   console.log(yyyy+"-"+mm+"-"+dd);
+  //   return yyyy+"-"+mm+"-"+dd;
 
+  // }
+  const formatDate = (date) => {
+    return date.toISOString().split("T")[0];
+  };
   return (
-    <div>
+    <div >
       {/* MedicineAdd */}
 
       <div className={classes.formContainer}>
-        <Typography gutterBottom variant="h4" align="center">
+        <Typography gutterBottom variant="h4" align="center" >
           Add medicine
           {/* <p>{formErrors.medicineName}</p> */}
         </Typography>
@@ -163,8 +190,9 @@ function MedicineAdd() {
             style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
           >
             <CardContent>
-              <form>
+              <form >
                 <Grid container spacing={1}>
+                  
                   <Grid xs={12} item>
                     {/* <div className="categorySelector">
                     <select className= {classes.category}
@@ -195,9 +223,11 @@ function MedicineAdd() {
                       variant="outlined"
                       fullWidth
                       // required
+                      
                     />
+                    
                   </Grid>
-
+                  
                   <Grid xs={9} sm={4} item>
                     <TextField
                       placeholder="Medicine cost"
@@ -214,7 +244,7 @@ function MedicineAdd() {
                     />
                   </Grid>
                   <Grid xs={12} sm={8} item>
-                    <TextField
+                  <TextField
                       type="text"
                       name="companyName"
                       placeholder="Company Name"
@@ -226,29 +256,29 @@ function MedicineAdd() {
                       fullWidth
                       // required
                     />
+                    
                   </Grid>
-
+                  
                   <Grid xs={9} sm={4} item>
-                    <div className="categorySelector">
-                      <select
-                        className={classes.category}
-                        name="categoryName"
-                        value={formValues.categoryDTO.categoryName}
-                        onChange={onChangeCategory}
-                      >
-                        <option value="">Category</option>
-                        {categoryNameList.map((category) => (
-                          <option
-                            value={category.categoryName}
-                            key={category.categoryId}
-                          >
-                            {category.categoryName}
-                          </option>
-                        ))}
-                      </select>
+                  <div className="categorySelector">
+                    <select className= {classes.category}
+                      name="categoryName"
+                      value={formValues.categoryDTO.categoryName}
+                      onChange={onChangeCategory}
+                    >
+                      <option value="">Category</option>
+                      {categoryNameList.map((category) => (
+                        <option
+                          value={category.categoryName}
+                          key={category.categoryId}
+                        >
+                          {category.categoryName}
+                        </option>
+                      ))}
+                    </select>
                     </div>
                   </Grid>
-
+         
                   <Grid item xs={12} sm={6}>
                     <TextField
                       type="date"
@@ -258,7 +288,8 @@ function MedicineAdd() {
                       onChange={handleChange}
                       variant="outlined"
                       label="Manufacturing Date"
-                      max={disableDate}
+                      inputProps={{max:formatDate(new Date())}}
+                      // max={formatDate(new Date())}
                       fullWidth
                       // required
                       InputLabelProps={{
@@ -276,7 +307,8 @@ function MedicineAdd() {
                       onChange={handleChange}
                       variant="outlined"
                       label="Expiry Date"
-                      min={disableDate}
+                      inputProps={{min:formatDate(new Date())}}
+                      min ={formatDate(new Date())}
                       fullWidth
                       // required
                       InputLabelProps={{
@@ -287,7 +319,7 @@ function MedicineAdd() {
 
                   <Grid item xs={12}>
                     <Button
-                      onClick={handleSubmit}
+                    onClick={handleSubmit}
                       type="submit"
                       variant="contained"
                       color="primary"
@@ -297,19 +329,28 @@ function MedicineAdd() {
                     </Button>
                   </Grid>
                 </Grid>
-                <br />
+                <br/>
+                {/* <AlertTitle>Error</AlertTitle> */}
+              <div className={classes.errors}>
+                {
+                  isSubmit===true && formErrors.error===false && <Alert severity="success">Medicine added !!!</Alert>
+                }
 
-                {/* <Alert severity="success">Medicine Added !!!</Alert> */}
-
-                <p>{message}</p>
-                <p>{formErrors.medicineName}</p>
-                <p>{formErrors.medicineCost}</p>
-                <p>{formErrors.companyName}</p>
-                <p>{formErrors.mfd}</p>
-                <p>{formErrors.expiryDate}</p>
+                {isSubmit===true && formErrors.medicineName &&  <Alert severity="error">{formErrors.medicineName}</Alert>}
+                {isSubmit===true && formErrors.medicineCost &&  <Alert severity="error">{formErrors.medicineCost}</Alert>}
+                {isSubmit===true && formErrors.companyName &&  <Alert severity="error">{formErrors.companyName}</Alert>}
+                
+                {isSubmit===true && formErrors.mfd &&  <Alert severity="error">{formErrors.mfd}</Alert>}
+                {isSubmit===true && formErrors.expiryDate &&  <Alert severity="error">{formErrors.expiryDate}</Alert>}
+                </div>
+                
+                
+                {/* <br/>{formErrors.medicineCost}<br/>{formErrors.companyName}<br/>{formErrors.mfd}<br/>{formErrors.expiryDate} */}
               </form>
+             
             </CardContent>
           </Card>
+          
         </Grid>
       </div>
 

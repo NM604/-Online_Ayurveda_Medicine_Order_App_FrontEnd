@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Alert from '@mui/material/Alert';
 
 import classes from "./MedicineAdd.module.css";
 import {
@@ -116,37 +117,83 @@ function MedicineUpdateForm() {
   const validate = (values) => {
 
     console.log("validating!!!")
-    const errors = {};
+    const errors = {error:false};
     const today = new Date();
     // const regex = [0-9]+;
     if (!values.medicineName) {
-      errors.medicineName = "medicine name is required!";
+      errors.medicineName = "Medicine name is required!";
+      errors.error = true;
 
     }
     if (!values.companyName) {
-      errors.companyName = "company name is required!";
+      errors.companyName = "Company name is required!";
+      errors.error = true;
     }
     if (!values.mfd) {
-      errors.mfd = "manufacturing date is required!";
+      errors.mfd = "Manufacturing date is required!";
+      errors.error = true;
     }
     else if (values.mfd >= today ){
-      errors.mfd = "manufacturing date cannot be future!";
+      errors.mfd = "Manufacturing date cannot be future!";
+      errors.error = true;
     }
     
     if (!values.expiryDate) {
-      errors.expiryDate = "expiry date is required!";
+      errors.expiryDate = "Expiry date is required!";
+      errors.error = true;
     }
     else if (values.expiryDate  >= today ){
-      errors.expiryDate = "expiry date cannot be in past!";
+      errors.expiryDate = "Expiry date cannot be in past!";
+      errors.error = true;
     }
     if (!values.medicineCost) {
-      errors.medicineCost = "medicine cost is required!";
+      errors.medicineCost = "Medicine cost is required!";
+      errors.error = true;
     }
     else if (values.medicineCost<= 0) {
-      errors.medicineCost = "medicine cost should be more than 0!";
+      errors.medicineCost = "Medicine cost should be more than 0!";
+      errors.error = true;
     }
     console.log(errors);
     return errors;
+  };
+  // const validate = (values) => {
+
+  //   console.log("validating!!!")
+  //   const errors = {};
+  //   const today = new Date();
+  //   // const regex = [0-9]+;
+  //   if (!values.medicineName) {
+  //     errors.medicineName = "medicine name is required!";
+
+  //   }
+  //   if (!values.companyName) {
+  //     errors.companyName = "company name is required!";
+  //   }
+  //   if (!values.mfd) {
+  //     errors.mfd = "manufacturing date is required!";
+  //   }
+  //   else if (values.mfd >= today ){
+  //     errors.mfd = "manufacturing date cannot be future!";
+  //   }
+    
+  //   if (!values.expiryDate) {
+  //     errors.expiryDate = "expiry date is required!";
+  //   }
+  //   else if (values.expiryDate  >= today ){
+  //     errors.expiryDate = "expiry date cannot be in past!";
+  //   }
+  //   if (!values.medicineCost) {
+  //     errors.medicineCost = "medicine cost is required!";
+  //   }
+  //   else if (values.medicineCost<= 0) {
+  //     errors.medicineCost = "medicine cost should be more than 0!";
+  //   }
+  //   console.log(errors);
+  //   return errors;
+  // };
+  const formatDate = (date) => {
+    return date.toISOString().split("T")[0];
   };
 
   return (
@@ -228,35 +275,27 @@ function MedicineUpdateForm() {
                   <TextField
                       type="text"
                       name="companyName"
-                      placeholder={medicine.companyName}
+                      placeholder="Company Name"
                       margin="dense"
                       value={formValues.companyName}
                       onChange={handleChange}
-                  
                       label="Company Name"
                       variant="outlined"
                       fullWidth
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       // required
                     />
-                    
-                  </Grid>
-                  
-                  
-         
-                  <Grid item xs={12} sm={6}>
-                    <TextField
+                    </Grid>
+                  <Grid xs={12} sm={6}  item>
+                  <TextField
                       type="date"
                       name="mfd"
-                      placeholder={medicine.mfd}
+                      placeholder="Manufacturing Date"
                       value={formValues.mfd}
                       onChange={handleChange}
-                   
                       variant="outlined"
                       label="Manufacturing Date"
-                      // max={disableDate}
+                      inputProps={{max:formatDate(new Date())}}
+                      // max={formatDate(new Date())}
                       fullWidth
                       // required
                       InputLabelProps={{
@@ -265,6 +304,26 @@ function MedicineUpdateForm() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
+                    <TextField
+                      id="outlined-Expiry"
+                      type="date"
+                      name="expiryDate"
+                      placeholder="Expiry Date"
+                      value={formValues.expiryDate}
+                      onChange={handleChange}
+                      variant="outlined"
+                      label="Expiry Date"
+                      inputProps={{min:formatDate(new Date())}}
+                      min ={formatDate(new Date())}
+                      fullWidth
+                      // required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  {/* <Grid item xs={12} sm={6}>
                     <TextField
                       id="outlined-Expiry"
                       type="date"
@@ -282,7 +341,7 @@ function MedicineUpdateForm() {
                         shrink: true,
                       }}
                     />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs={12}>
                     <Button
@@ -298,15 +357,18 @@ function MedicineUpdateForm() {
                 </Grid>
                 <br/>
                 
-                {/* <Alert severity="success">Medicine Added !!!</Alert> */}
-                
-                {/* <p>{message}</p> */}
-                <p>{formErrors.medicineName}</p>
-                <p>{formErrors.medicineCost}</p>
-                <p>{formErrors.companyName}</p>
-                <p>{formErrors.mfd}</p>
-                <p>{formErrors.expiryDate}</p>
+                <div className={classes.errors}>
+                {
+                  isSubmit===true && formErrors.error===false && <Alert severity="success">Medicine updated !!!</Alert>
+                }
 
+                {isSubmit===true && formErrors.medicineName &&  <Alert severity="error">{formErrors.medicineName}</Alert>}
+                {isSubmit===true && formErrors.medicineCost &&  <Alert severity="error">{formErrors.medicineCost}</Alert>}
+                {isSubmit===true && formErrors.companyName &&  <Alert severity="error">{formErrors.companyName}</Alert>}
+                
+                {isSubmit===true && formErrors.mfd &&  <Alert severity="error">{formErrors.mfd}</Alert>}
+                {isSubmit===true && formErrors.expiryDate &&  <Alert severity="error">{formErrors.expiryDate}</Alert>}
+                </div>
               </form>
             </CardContent>
           </Card>
@@ -328,7 +390,7 @@ function MedicineUpdateForm() {
 
 
 
-      Current values
+      {/* Current values
       <br/>
       <div>Medicine Id: {medicine.medicineId}</div>
       <div>Medicine Name: {medicine.medicineName}</div>
@@ -337,95 +399,7 @@ function MedicineUpdateForm() {
       <div>Expiry Date: {medicine.expiryDate}</div>
       <div>Manufacturing Date: {medicine.mfd}</div>
 
-      <form onSubmit={handleSubmit}>
-        <h1>Update Medicine</h1>
-        <div className="ui divider"></div>
-        <div className="ui form">
-        {/* <div className="field">
-            <label>Medicine Id</label>
-            <input
-              type="text"
-              name="medicineName"
-              placeholder="Medicine Name"
-              value={formValues.medicineId}
-              onChange={handleChange}
-            />
-          </div> */}
-          
-          <div className="field">
-            <label>Medicine Name</label>
-            <input
-              type="text"
-              name="medicineName"
-              placeholder="Medicine Name"
-              value={formValues.medicineName}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.medicineName}</p>
-          <div className="field">
-            <label>Company Name</label>
-            <input
-              type="text"
-              name="companyName"
-              placeholder="Company Name"
-              value={formValues.companyName}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.companyName}</p>
-          <p>{formErrors.username}</p>
-          <div className="field">
-            <label>Medicine Cost</label>
-            <input
-              type="text"
-              name="medicineCost"
-              placeholder="Medicine Cost"
-              value={formValues.medicineCost}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.medicineCost}</p>
-          <div className="field">
-            <label>Manufacturing Date</label>
-            <input
-              type="date"
-              name="mfd"
-              placeholder="Manufacturing Date"
-              value={formValues.mfd}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.mfd}</p>
-          <div className="field">
-            <label>Expiry Date</label>
-            <input
-              type="date"
-              name="expiryDate"
-              placeholder="Expiry Date"
-              value={formValues.expiryDate}
-              onChange={handleChange}
-            />
-          </div>
-          <p>{formErrors.expiryDate}</p>
-          {/* <div className="field">
-            <label>Choose Category</label>
-            {/* <select
-              value={formValues.categoryDto.categoryName}
-              onChange={hadleCategory}
-            >
-              {/* <option value="">Choose Category</option> */}
-              {/* {categoryNameList.map((category) => (
-                <option value={category.categoryName} key={category.categoryId}>
-                  {category.categoryId}. {category.categoryName}
-                </option>
-              ))}
-            </select> */} 
-          {/* </div> */} 
-
-          <button className="fluid ui button blue" >Submit</button>
-        </div>
-      </form>
+   */}
       
 
       
