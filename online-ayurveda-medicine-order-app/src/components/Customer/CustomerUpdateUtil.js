@@ -3,7 +3,7 @@ import backendAPI from "../../apis/backendAPI";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
-import classes from "./CustomerUpdateUtil.module.css";
+import classes from "./CustomerUpdateUtil.css";
 
 function CustomerUpdateUtil() {
   const initialValues = {
@@ -65,7 +65,7 @@ function CustomerUpdateUtil() {
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
         <Form.Label id="input">
-          <b>Customer ID</b>
+          Customer ID
         </Form.Label>
         <Form.Control
           type="number"
@@ -75,12 +75,12 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          <b>{formErrors.customerId}</b>
+          {formErrors.customerId}
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerName">
         <Form.Label id="input">
-          <b>Username</b>
+          Username
         </Form.Label>
         <Form.Control
           type="text"
@@ -90,7 +90,7 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          <b>{formErrors.customerName}</b>
+          {formErrors.customerName}
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerPassword">
@@ -105,7 +105,7 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          <b>{formErrors.customerPassword}</b>
+          {formErrors.customerPassword}
         </Form.Text>
       </Form.Group>
       <div className="buttons-update">
