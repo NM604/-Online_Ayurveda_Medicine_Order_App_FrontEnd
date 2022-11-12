@@ -167,7 +167,7 @@ function MedicineAdd() {
   const validateCategory = (values) => {
     console.log("validating Category!!!");
     const categoryErrors = { error: false };
-    const letters = /^[A-Za-z]+$/;
+    const letters = /^([a-z]+\s?)+$/;
     
     if (!values.categoryName) {
       categoryErrors.categoryName = "Category name Required!";
@@ -185,7 +185,7 @@ function MedicineAdd() {
     console.log("validating!!!");
     const errors = { error: false };
 
-    const letters = /^[a-z]+$/;
+    const letters = /^([a-z]+\s?)+$/;
     const numbers = /^[0-9]+$/;
 
     // const regex = [0-9]+;

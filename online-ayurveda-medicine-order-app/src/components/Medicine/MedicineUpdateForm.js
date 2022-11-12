@@ -95,7 +95,7 @@ function MedicineUpdateForm() {
     console.log("validating!!!");
     const errors = { error: false };
 
-    const letters = /^[a-z]+$/;
+    const letters = /^([a-z]+\s?)+$/;
     const numbers = /^[0-9]+$/;
 
     // const regex = [0-9]+;
