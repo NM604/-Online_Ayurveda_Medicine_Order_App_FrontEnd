@@ -92,48 +92,48 @@ function MedicineUpdateForm() {
     
   };
   const validate = (values) => {
+    console.log("validating!!!");
+    const errors = { error: false };
 
-    console.log("validating!!!")
-    const errors = {error:false};
-    const today = new Date();
+    const letters = /^[a-z]+$/;
+    const numbers = /^[0-9]+$/;
+
     // const regex = [0-9]+;
     if (!values.medicineName) {
       errors.medicineName = "Medicine name is required!";
       errors.error = true;
-
     }
     if (!values.companyName) {
       errors.companyName = "Company name is required!";
       errors.error = true;
     }
+    else if(!letters.test(values.companyName.toLowerCase())){
+      errors.companyName = "Company name cannot have digits!";
+      errors.error = true;
+    }
     if (!values.mfd) {
       errors.mfd = "Manufacturing date is required!";
       errors.error = true;
-    }
-    else if (values.mfd >= today ){
-      errors.mfd = "Manufacturing date cannot be future!";
-      errors.error = true;
-    }
-    
+    } 
+
     if (!values.expiryDate) {
       errors.expiryDate = "Expiry date is required!";
       errors.error = true;
-    }
-    else if (values.expiryDate  >= today ){
-      errors.expiryDate = "Expiry date cannot be in past!";
-      errors.error = true;
-    }
+    } 
     if (!values.medicineCost) {
       errors.medicineCost = "Medicine cost is required!";
       errors.error = true;
-    }
-    else if (values.medicineCost<= 0) {
+    } else if (values.medicineCost <= 0) {
       errors.medicineCost = "Medicine cost should be more than 0!";
+      errors.error = true;
+    } else if(!numbers.test(values.medicineCost)){
+      errors.medicineCost = "Medicine cost field cannot have letters!";
       errors.error = true;
     }
     console.log(errors);
     return errors;
   };
+
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
