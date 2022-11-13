@@ -82,13 +82,14 @@ const AdminOrders = () => {
 
   return (
     <section className={classes["admin-order-container"]}>
-      <h3>All Orders</h3>
+      <h3 data-testid="Adminorder-header">All Orders</h3>
       {error && <h1>{error.message}</h1>}
       {error && <ErrorCard />}
       {!error && (
-        <div className={classes["admin-order-items"]}>
+        <div data-testid="Adminorders-list" className={classes["admin-order-items"]}>
           <div className={classes["filter-form"]}>
             <Select
+              data-testid="Filter-formlist"
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={filter}
@@ -102,6 +103,7 @@ const AdminOrders = () => {
               <MenuItem value="customerId">Customer id</MenuItem>
             </Select>
             <TextField
+               data-testid="Filter-searchbar"
               value={sq}
               onChange={(e) => setsq(e.target.value)}
               id="outlined-basic"

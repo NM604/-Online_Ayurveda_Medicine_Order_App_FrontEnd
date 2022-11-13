@@ -52,6 +52,7 @@ const AdminOrderItem = (props) => {
         <Button
           variant="primary"
           className={classes["info-status"]}
+          aria-label="update-button"
           onClick={() => setButtonPopup(true)}
         >
           {" "}
