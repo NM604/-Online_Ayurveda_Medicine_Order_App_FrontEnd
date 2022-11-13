@@ -1,0 +1,48 @@
+body {
+    background-color: #d4e2ee;
+}
+
+.container{
+  display: flex;
+  height:80vh;
+  width:100%;
+  justify-content: center;
+  align-items: center;
+  border-image: linear-gradient(to bottom, turquoise, greenyellow) 0 1;
+}
+
+.container h2{
+  margin: 50px;
+}
+
+.container .buttons{
+  display: inline-flex;
+  margin: 25px;
+}
+
+.container .buttons-update{
+  display: flex;
+  margin: 25px;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-2{
+  margin-top: 50px;
+  display: flex;
+  width:100%;
+  justify-content: center;
+  border-image: linear-gradient(to bottom, turquoise, greenyellow) 0 1;
+}
+
+.container-2 .buttons{
+  display: inline-flex;
+  margin: 25px;
+}
+
+.container-2 .buttons-update{
+  display: flex;
+  margin: 25px;
+  justify-content: center;
+  align-items: center;
+}

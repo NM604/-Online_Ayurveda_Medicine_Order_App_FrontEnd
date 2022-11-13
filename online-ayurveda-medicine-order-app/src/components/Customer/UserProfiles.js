@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import backendAPI from "../../apis/backendAPI";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import Card from "react-bootstrap/Card";
 
 const UserProfiles = () => {
   const [userProfiles, setUserProfiles] = useState([]);
@@ -43,16 +41,23 @@ const UserProfiles = () => {
 
   return userProfiles.map((userProfile, index) => {
     return (
-      <div>
-        <p>ID : {userProfile.customerId}</p>
-        <p>Name : {userProfile.customerName}</p>
-        <Button
-          variant="danger"
-          onClick={() => deleteHandler(userProfile.customerId)}
-          id="btn"
-        >
-          Delete{" "}
-        </Button>
+      <div className="container" id="cont">
+        <Card style={{ width: "16rem", height: "220px" }}>
+          <Card.Body>
+            <Card.Title>User Profile</Card.Title>
+            <br />
+            <p>ID : {userProfile.customerId}</p>
+            <p>Name : {userProfile.customerName}</p>
+            <Button
+              variant="danger"
+              onClick={() => deleteHandler(userProfile.customerId)}
+              id="btn"
+              aria-label="profile-button"
+            >
+              Delete{" "}
+            </Button>
+          </Card.Body>
+        </Card>
       </div>
     );
   });

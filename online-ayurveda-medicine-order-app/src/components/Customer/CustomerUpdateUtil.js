@@ -3,7 +3,7 @@ import backendAPI from "../../apis/backendAPI";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
-import classes from "./CustomerUpdateUtil.css";
+import classes from "./CustomerUpdateUtil.module.css";
 
 function CustomerUpdateUtil() {
   const initialValues = {
@@ -23,7 +23,9 @@ function CustomerUpdateUtil() {
   const handleUpdate = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    updateCustomer();
+    if (formErrors.flag === false) {
+      updateCustomer();
+    }
   };
 
   const updateCustomer = async () => {
@@ -41,19 +43,25 @@ function CustomerUpdateUtil() {
 
   const validate = (values) => {
     const errors = {};
+    errors.flag = false;
     if (!values.customerId) {
       errors.customerId = "ID is required!";
+      errors.flag = true;
     }
     if (!values.customerName) {
       errors.customerName = "Username is required!";
+      errors.flag = true;
     }
     if (!values.customerPassword) {
       errors.customerPassword = "Password is required!";
+      errors.flag = true;
     } else if (values.customerPassword.length < 4) {
       errors.customerPassword = "Password must be more than 4 characters";
+      errors.flag = true;
     } else if (values.customerPassword.length > 10) {
       errors.customerPassword =
         "Password cannot exceed more than 10 characters";
+      errors.flag = true;
     }
     return errors;
   };
@@ -65,7 +73,7 @@ function CustomerUpdateUtil() {
       </h2>
       <Form.Group className="mb-3" controlId="customerId">
         <Form.Label id="input">
-          Customer ID
+          <b>Customer ID</b>
         </Form.Label>
         <Form.Control
           type="number"
@@ -75,12 +83,12 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          {formErrors.customerId}
+          <b>{formErrors.customerId}</b>
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerName">
         <Form.Label id="input">
-          Username
+          <b>Username</b>
         </Form.Label>
         <Form.Control
           type="text"
@@ -90,7 +98,7 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          {formErrors.customerName}
+          <b>{formErrors.customerName}</b>
         </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="customerPassword">
@@ -105,7 +113,7 @@ function CustomerUpdateUtil() {
           onChange={handleChange}
         />
         <Form.Text className="text">
-          {formErrors.customerPassword}
+          <b>{formErrors.customerPassword}</b>
         </Form.Text>
       </Form.Group>
       <div className="buttons-update">

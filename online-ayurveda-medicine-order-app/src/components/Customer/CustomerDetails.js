@@ -8,7 +8,7 @@ import Collapse from "react-bootstrap/Collapse";
 import CustomerUpdateUtil from "./CustomerUpdateUtil";
 import backendAPI from "../../apis/backendAPI";
 import Card from "react-bootstrap/Card";
-import classes from "./CustomerDetails.css";
+import classes from "./CustomerLoginUtil.module.css";
 
 const CustomerDetails = () => {
   const [customerDetails, setCustomerDetails] = useState({});
@@ -58,7 +58,11 @@ const CustomerDetails = () => {
   };
 
   return (
-    <div className="container" data-testid="customer-container" id="con">
+    <div
+      className={classes["container"]}
+      data-testid="customer-container"
+      id="con"
+    >
       <div key={customerDetails.customerId} className="cust">
         <h1 data-testid="customer-header-1">Customer Details</h1>
         <br />
@@ -94,7 +98,7 @@ const CustomerDetails = () => {
           </Card>
         </div>
       </Collapse>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="warning"
           onClick={() => setOpen(!open)}

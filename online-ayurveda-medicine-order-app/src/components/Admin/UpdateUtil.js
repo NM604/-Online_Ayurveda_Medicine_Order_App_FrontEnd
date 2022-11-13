@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../../CSS/login.css";
 import backendAPI from "../../apis/backendAPI";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -19,7 +18,9 @@ function UpdateUtil() {
   const handleUpdate = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    updateAdmin();
+    if (formErrors.flag === false) {
+      updateAdmin();
+    }
   };
 
   const updateAdmin = async () => {
@@ -36,16 +37,21 @@ function UpdateUtil() {
 
   const validate = (values) => {
     const errors = {};
+    errors.flag = false;
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.id) {
       errors.id = "ID is required!";
+      errors.flag = true;
     }
     if (!values.password) {
       errors.password = "Password is required";
+      errors.flag = true;
     } else if (values.password.length < 4) {
       errors.password = "Password must be more than 4 characters";
+      errors.flag = true;
     } else if (values.password.length > 10) {
       errors.password = "Password cannot exceed more than 10 characters";
+      errors.flag = true;
     }
     return errors;
   };

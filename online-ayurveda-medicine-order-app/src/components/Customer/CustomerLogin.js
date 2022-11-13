@@ -1,10 +1,10 @@
 import React from "react";
-import "../../CSS/login.css";
 import CustomerLoginUtil from "./CustomerLoginUtil";
+import classes from "./CustomerLoginUtil.module.css";
 
 function CustomerLogin() {
   return (
-    <div className="container-2">
+    <div className={classes["container-2"]}>
       <CustomerLoginUtil />
     </div>
   );

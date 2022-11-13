@@ -6,8 +6,8 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import UpdateUtil from "./UpdateUtil";
-import "../../CSS/admin.css";
 import backendAPI from "../../apis/backendAPI";
+import classes from "./Admin.module.css";
 
 function Admin() {
   const initialValues = { id: 0, password: "" };
@@ -60,9 +60,9 @@ function Admin() {
   };
 
   return (
-    <div className="container-3" data-testid="admin-container">
+    <div data-testid="admin-container" className={classes["container-3"]}>
       <h3 data-testid="admin-header-1">Management Services</h3>
-      <div className="item-1">
+      <div className={classes["item-1"]}>
         <Card testID="profile-card" style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>Profile Details</Card.Title>
@@ -71,7 +71,7 @@ function Admin() {
             </Card.Text>
           </Card.Body>
         </Card>
-        <div className="buttons">
+        <div className={classes["buttons"]}>
           <Button
             variant="warning"
             onClick={() => setOpen(!open)}
@@ -87,7 +87,7 @@ function Admin() {
             <UpdateUtil />
           </div>
         </Collapse>
-        <div className="buttons">
+        <div className={classes["buttons"]}>
           <Button
             variant="danger"
             onClick={() => setOpenOther(!openOther)}
@@ -116,7 +116,7 @@ function Admin() {
             </div>
           </Collapse>
         </div>
-        <div className="buttons">
+        <div className={classes["buttons"]}>
           <Button
             variant="danger"
             aria-label="admin-button"
@@ -126,11 +126,11 @@ function Admin() {
           </Button>
         </div>
       </div>
-      <div className="items">
-        <div className="item" data-testid="card-items">
+      <div className={classes["items"]}>
+        <div className={classes["item"]} data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
-              className="photo"
+              className={classes["photo"]}
               variant="top"
               src={require("./first.jpeg")}
             />
@@ -159,10 +159,10 @@ function Admin() {
             </Card.Body>
           </Card>
         </div>
-        <div className="item" data-testid="card-items">
+        <div className={classes["item"]} data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
-              className="photo"
+              className={classes["photo"]}
               variant="top"
               src={require("./second.jpeg")}
             />
@@ -183,10 +183,10 @@ function Admin() {
             </Card.Body>
           </Card>
         </div>
-        <div className="item" data-testid="card-items">
+        <div className={classes["item"]} data-testid="card-items">
           <Card style={{ width: "25rem", height: "500px" }}>
             <Card.Img
-              className="photo"
+              className={classes["photo"]}
               variant="top"
               src={require("./third.jpeg")}
             />
@@ -208,7 +208,7 @@ function Admin() {
           </Card>
         </div>
       </div>
-      <div className="item-1"></div>
+      <div className={classes["item-1"]}></div>
     </div>
   );
 }

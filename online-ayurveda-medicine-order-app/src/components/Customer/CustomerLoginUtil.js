@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../../CSS/login.css";
 import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 import Collapse from "react-bootstrap/Collapse";
 import { userActions } from "../../store/user";
+import classes from "./CustomerLoginUtil.module.css";
 
 function CustomerLoginUtil() {
   const initialValues = {
@@ -48,14 +48,18 @@ function CustomerLoginUtil() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    backendValidate();
+    if (formErrors.flag === false) {
+      backendValidate();
+    }
     setIsSubmit(true);
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    registerCustomer();
+    if (formErrors.flag === false) {
+      registerCustomer();
+    }
     setIsSubmit(true);
   };
 
@@ -92,19 +96,25 @@ function CustomerLoginUtil() {
 
   const validate = (values) => {
     const errors = {};
+    errors.flag = false;
     if (!values.customerId) {
       errors.customerId = "ID is required!";
+      errors.flag = true;
     }
     if (!values.customerName) {
       errors.customerName = "Username is required!";
+      errors.flag = true;
     }
     if (!values.customerPassword) {
       errors.customerPassword = "Password is required";
+      errors.flag = true;
     } else if (values.customerPassword.length < 4) {
       errors.customerPassword = "Password must be more than 4 characters";
+      errors.flag = true;
     } else if (values.customerPassword.length > 10) {
       errors.customerPassword =
         "Password cannot exceed more than 10 characters";
+      errors.flag = true;
     }
     return errors;
   };
@@ -154,7 +164,7 @@ function CustomerLoginUtil() {
           <pre>{response}</pre>
         )}
       </Form.Group>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="primary"
           aria-label="submit-button"
@@ -163,7 +173,7 @@ function CustomerLoginUtil() {
           Submit
         </Button>
       </div>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="secondary"
           aria-label="register-button"
@@ -172,7 +182,7 @@ function CustomerLoginUtil() {
           Sign Up!
         </Button>
       </div>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="warning"
           onClick={() => setOpen(!open)}

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { authActions } from "../store/auth";
 import { save } from "../store/cred";
 import Button from "react-bootstrap/Button";
-import "../CSS/dashboard.css";
+import classes from "./Dashboard.module.css";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -29,12 +29,16 @@ function Dashboard() {
   };
 
   return (
-    <div className="container">
-      <Button className="button" variant="success" onClick={handleAdminClick}>
+    <div className={classes["container"]}>
+      <Button
+        className={classes["button"]}
+        variant="success"
+        onClick={handleAdminClick}
+      >
         Login as Admin
       </Button>
       <Button
-        className="button"
+        className={classes["button"]}
         variant="primary"
         onClick={handleCustomerClick}
       >

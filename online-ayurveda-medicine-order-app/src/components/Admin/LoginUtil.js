@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../../CSS/login.css";
 import backendAPI from "../../apis/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +10,7 @@ import Badge from "react-bootstrap/Badge";
 import Collapse from "react-bootstrap/Collapse";
 import UpdateUtil from "./UpdateUtil";
 import { userActions } from "../../store/user";
-import { history } from "../../utilities/history";
+import classes from "./LoginUtil.module.css";
 
 function LoginUtil() {
   const initialValues = { id: null, password: "" };
@@ -44,14 +43,18 @@ function LoginUtil() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    backendValidate();
+    if (formErrors.flag === false) {
+      backendValidate();
+    }
     setIsSubmit(true);
   };
 
   const handleClick = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    registerAdmin();
+    if (formErrors.flag === false) {
+      registerAdmin();
+    }
     setIsSubmit(true);
   };
 
@@ -88,16 +91,21 @@ function LoginUtil() {
 
   const validate = (values) => {
     const errors = {};
+    errors.flag = false;
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.id) {
       errors.id = "ID is required!";
+      errors.flag = true;
     }
     if (!values.password) {
       errors.password = "Password is required";
+      errors.flag = true;
     } else if (values.password.length < 4) {
       errors.password = "Password must be more than 4 characters";
+      errors.flag = true;
     } else if (values.password.length > 10) {
       errors.password = "Password cannot exceed more than 10 characters";
+      errors.flag = true;
     }
     return errors;
   };
@@ -115,6 +123,7 @@ function LoginUtil() {
           placeholder="Enter ID"
           value={formValues.id}
           onChange={handleChange}
+          aria-label="id-input-field"
         />
         <Form.Text className="text-muted">{formErrors.id}</Form.Text>
       </Form.Group>
@@ -135,7 +144,7 @@ function LoginUtil() {
           <pre>{response}</pre>
         )}
       </Form.Group>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="primary"
           aria-label="submit-button"
@@ -144,7 +153,7 @@ function LoginUtil() {
           Submit
         </Button>
       </div>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="secondary"
           aria-label="register-button"
@@ -153,7 +162,7 @@ function LoginUtil() {
           Sign Up as Admin
         </Button>
       </div>
-      <div className="buttons">
+      <div className={classes["buttons"]}>
         <Button
           variant="warning"
           onClick={() => setOpen(!open)}
