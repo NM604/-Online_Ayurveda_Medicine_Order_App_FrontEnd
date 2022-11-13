@@ -5,13 +5,22 @@ import axios from "axios";
 import { cartActions } from "../../store/cart";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./CheckoutCard.module.css";
+import { Link } from "react-router-dom";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function CheckoutCard(props) {
   const custId = localStorage.getItem("loggedId");
   const localStorageCart = JSON.parse(localStorage.getItem("cartItems"));
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
-  const [error,setError]=useState('');
+  const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     updateTotalPrice();
   }, []);
@@ -31,10 +40,22 @@ function CheckoutCard(props) {
   const formatDate = (date) => {
     return date.toISOString().split("T")[0];
   };
-  const orderHandler = () => {
-    if(totalPrice===0){
-      setError('Cart is empty')
+
+  const handleClickOpen = () => {
+    if (totalPrice === 0) {
+      setError("Cart is empty");
     }
+    if (totalPrice != 0) {
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const orderHandler = () => {
+    
     if (totalPrice != 0) {
       let ordDate = new Date();
       let disDate = new Date();
@@ -75,8 +96,9 @@ function CheckoutCard(props) {
 
       dispatch(cartActions.clearCart());
       setTotalPrice(0);
-      setError('')
+      setError("");
     }
+    setOpen(false);
   };
   const postData = async (url, data) => {
     try {
@@ -89,14 +111,44 @@ function CheckoutCard(props) {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card data-testid="card" className={classes.card}>
       <Card.Body className={classes["card-body"]}>
         <Card.Title>Order Summary</Card.Title>
         <Card.Text>Total Price :{totalPrice}</Card.Text>
-        <Button variant="primary" onClick={orderHandler}>
-          Place order
+        <Link to="/my-orders">
+          <Button className={classes.btn} variant="outline-primary">
+            View orders
+          </Button>
+        </Link>
+        <Button
+          className={classes.btn}
+          variant="primary"
+          onClick={handleClickOpen}
+        >
+          Checkout
         </Button>
-        <Card.Text>{error}</Card.Text>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Confirm order"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Confirm order by clicking 'Confirm' button
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={orderHandler} autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Card.Text style={{ color: "red" }}>{error}</Card.Text>
       </Card.Body>
     </Card>
   );

@@ -4,6 +4,7 @@ const ErrorCard = (props) => {
   return (
     <div className={classes.error}>
       <span>{props.error.message}</span>
+      <span>Try after sometime</span>
     </div>
   )
 }

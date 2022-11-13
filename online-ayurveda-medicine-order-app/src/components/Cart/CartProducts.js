@@ -90,7 +90,7 @@ const CartProducts = () => {
 
   return (
     <div className={classes["cart-container"]}>
-      <div className={classes["cart-header"]}>
+      <div data-testid="cart-header" className={classes["cart-header"]}>
         <h1>My shopping cart</h1>
       </div>
       <div className={classes["cart-body"]}>

@@ -7,11 +7,12 @@ import { authActions } from "../../../store/auth";
 import Table from "react-bootstrap/Table";
 import ErrorCard from "../../UI/ErrorCard";
 import { fetchCustomerOrder } from "./api/orders";
-
+import CircularProgress from "@mui/material/CircularProgress";
 const Orders = () => {
   const custId = localStorage.getItem("loggedId");
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchData();
   }, []);
@@ -20,11 +21,13 @@ const Orders = () => {
       const orderItems = await fetchCustomerOrder(custId);
       console.log("Suc");
       setOrders(orderItems);
+
       setError();
     } catch (err) {
       console.log("err");
       setError(err);
     }
+    setLoading(false);
     // if(orderItems.orderDetailId){
     //   setOrders(orderItems);
     //   setError();
@@ -43,6 +46,13 @@ const Orders = () => {
     //   setError(err);
     // }
   };
+  if (loading) {
+    return (
+      <div className={classes.loading}>
+        <CircularProgress />
+      </div>
+    );
+  }
   return (
     <section className={classes["order-container"]}>
       <div data-testid="order-header" className={classes["order-header"]}>

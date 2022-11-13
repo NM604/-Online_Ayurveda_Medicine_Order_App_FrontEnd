@@ -9,3 +9,8 @@
     justify-content: center;
     align-items: center;
 }
+
+.btn{
+    width: 10rem;
+    margin-top: 1rem;
+}

@@ -1,13 +1,30 @@
-import React from "react";
+import { useState } from "react";
 import Card from "../../UI/Card";
 import classes from "./OrderItem.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
 const OrderItem = (props) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const cancelHandler = () => {
     updateStatus();
+    setOpen(false);
     window.location.reload(false);
   };
   const updateStatus = async () => {
@@ -55,7 +72,7 @@ const OrderItem = (props) => {
         <div
           style={{
             borderColor: `${bg}`,
-            color: `${bg}`
+            color: `${bg}`,
           }}
           className={classes["order-status"]}
         >
@@ -64,14 +81,43 @@ const OrderItem = (props) => {
       </td>
       <td>
         {isCreated && (
-          <Button aria-label='cancel-btn' variant="outline-danger" onClick={cancelHandler}>
-            Cancel
-          </Button>
+          <>
+            <Button
+              aria-label="cancel-btn"
+              variant="outline-danger"
+              onClick={handleClickOpen}
+            >
+              Cancel
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Cancel order"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to cancel order?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>No,don't cancel</Button>
+                <Button onClick={cancelHandler} autoFocus>
+                  Yes, cancel
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
         )}
       </td>
       <td>
         <Link to={`/my-orders/${props.id}`}>
-          <Button aria-label='detail-btn' variant="outline-info">Show details</Button>
+          <Button aria-label="detail-btn" variant="outline-info">
+            Show details
+          </Button>
         </Link>
       </td>
     </tr>
