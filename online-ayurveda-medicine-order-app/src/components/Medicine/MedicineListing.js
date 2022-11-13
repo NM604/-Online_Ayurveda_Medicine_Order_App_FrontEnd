@@ -40,10 +40,11 @@ const MedicineListing = () => {
   const [quantity, setQuantity] = useState();
 
   return (
-    <div>
-      <h1 className={classes.heading}>All medicines</h1>
-      <div className={classes.productContainer}>
-        {error && <h1>{error.message}</h1>}
+    <div >
+      <h1 data-testid= "medicineListing-container" className={classes.heading}>All medicines</h1>
+      {/* {error && <h1>{error.message}</h1>} */}
+      <div data-testid= "medicine-container" className={classes.productContainer}>
+        
         {medicines.map((post) => {
           const { medicineId, medicineName, medicineCost, companyName } = post;
           const medItem = {
@@ -62,7 +63,7 @@ const MedicineListing = () => {
            
           );
         })}
-        ;
+        
       </div>
     </div>
   );

@@ -140,17 +140,17 @@ function MedicineUpdateForm() {
   };
 
   return (
-    <div>
-<div className={classes.formContainer}>
-        <Typography gutterBottom variant="h4" align="center" >
+    <div data-testid= "updateForm-container">
+<div data-testid= "updateForm-container2" className={classes.formContainer}>
+        <Typography data-testid= "updateForm-header" gutterBottom variant="h4" align="center" >
           Update Medicine
           {/* <p>{formErrors.medicineName}</p> */}
         </Typography>
-        <Grid>
-          <Card
+        <Grid data-testid= "updateForm-grid">
+          <Card data-testid= "updateForm-card"
             style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
           >
-            <CardContent>
+            <CardContent data-testid= "updateForm-card2">
               <form >
                 <Grid container spacing={1}>
                   

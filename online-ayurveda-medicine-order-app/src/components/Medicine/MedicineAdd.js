@@ -114,8 +114,8 @@ function MedicineAdd() {
   };
   const addmed = async () => {
     try {
-      await axios
-        .post("http://localhost:8080/oam/userinterface/medicine", {
+      await backendAPI
+        .post("/oam/userinterface/medicine", {
           categoryDTO: formValues.categoryDTO,
           companyName: formValues.companyName,
           expiryDate: formValues.expiryDate,
@@ -228,15 +228,15 @@ function MedicineAdd() {
     return date.toISOString().split("T")[0];
   };
   return (
-    <div>
+    <div data-testid= "medicineAdd-container">
       {/* MedicineAdd */}
 
       <div className={classes.formContainer}>
-        <Typography gutterBottom variant="h4" align="center">
+        <Typography data-testid= "medicineAdd-header" gutterBottom variant="h4" align="center">
           Add medicine
           {/* <p>{formErrors.medicineName}</p> */}
         </Typography>
-        <Button className={classes.addCategory} variant="outlined" onClick={handleClickOpen}>
+        <Button data-testid= "medicineAdd-category" className={classes.addCategory} variant="outlined" onClick={handleClickOpen}>
         Add Category
       </Button>
                         <Dialog open={open} onClose={handleClose}>
@@ -245,7 +245,7 @@ function MedicineAdd() {
                             {/* <DialogContentText>
                               Enter category name
                             </DialogContentText> */}
-                            <form>
+                            <form > 
                             <TextField
                               autoFocus
                               margin="dense"
@@ -271,10 +271,10 @@ function MedicineAdd() {
                         </Dialog>
 
         <Grid>
-          <Card
+          <Card data-testid= "medicineAdd-card"
             style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
           >
-            <CardContent>
+            <CardContent data-testid= "medicineAdd-card2">
               <form>
                 <Grid container spacing={1}>
                   <Grid xs={12} item></Grid>

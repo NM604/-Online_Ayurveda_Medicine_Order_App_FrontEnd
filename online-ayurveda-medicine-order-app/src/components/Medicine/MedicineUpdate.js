@@ -93,9 +93,9 @@ const MedicineUpdate = () => {
   };
 
   return (
-    <div className={classes.productListing}>
+    <div data-testid= "update-container" className={classes.productListing}>
       {/* <h3 >Manage Medicines</h3> */}
-      <div className={classes.addButton}>
+      <div data-testid= "addCategory-button" className={classes.addButton}>
         <Link to={"/addMedicines"}>
           <ThemeProvider theme={theme}>
           <Button
@@ -110,7 +110,7 @@ const MedicineUpdate = () => {
           </ThemeProvider>
         </Link>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer data-testid= "add-table" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="caption table">
           <caption>All Medicines</caption>
           <TableHead>

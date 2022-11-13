@@ -78,11 +78,11 @@ const MedicineLIstingItem = (props) => {
                     name="qty"
                     min="1"
                   />
-                  <Button style={{textTransform:"none"}} variant="contained" type="submit">
+                  <Button variant="contained" type="submit">
                     Add to cart
                   </Button>
                 </div>
-                <span style={{color:"red",textTransform:"none"}}>{cartError}</span>
+                <span>{cartError}</span>
               </form>
             </Button>
           </CardActions>
