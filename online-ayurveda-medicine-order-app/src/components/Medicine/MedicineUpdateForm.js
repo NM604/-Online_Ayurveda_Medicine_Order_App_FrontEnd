@@ -82,7 +82,7 @@ function MedicineUpdateForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    if (formErrors.error === false){
+    if (validate(formValues).error === false){
       updateMedicine();
       console.log("Updated!!!")
       setIsSubmit(true);
@@ -202,7 +202,7 @@ function MedicineUpdateForm() {
                   <TextField
                       type="text"
                       name="companyName"
-                      placeholder="Company Name"
+                      placeholder={medicine.companyName}
                       margin="dense"
                       value={formValues.companyName}
                       onChange={handleChange}
@@ -210,6 +210,9 @@ function MedicineUpdateForm() {
                       variant="outlined"
                       fullWidth
                       // required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
                     />
                     </Grid>
                   <Grid xs={12} sm={6}  item>
@@ -250,25 +253,7 @@ function MedicineUpdateForm() {
                     />
                   </Grid>
 
-                  {/* <Grid item xs={12} sm={6}>
-                    <TextField
-                      id="outlined-Expiry"
-                      type="date"
-                      name="expiryDate"
-                      placeholder="Expiry Date"
-                      value={formValues.expiryDate}
-                      onChange={handleChange}
-                      defaultValue={medicine.expiryDate}
-                      variant="outlined"
-                      label="Expiry Date"
-                      // min ={disableDate}
-                      fullWidth
-                      // required
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid> */}
+  
 
                   <Grid item xs={12}>
                     <Button

@@ -133,12 +133,14 @@ function MedicineAdd() {
     }
   };
 
+
   const handleSubmitCategory = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    const isValid =validateCategory(categoryForm).error
    
     setCategoryFormErrors(validateCategory(categoryForm));
     console.log(categoryFormErrors);
-    if (formErrors.error === false){
+    if (!isValid){
       addCategory();
     console.log("category added !!!");
     setIsCategorySubmit(true);
@@ -153,15 +155,12 @@ function MedicineAdd() {
     setFormErrors(validate(formValues));
     console.log(formErrors);
 
-    if (formErrors.error === false){
+    if (validate(formValues).error === false){
       addmed();
       console.log("added!!!");
       setIsSubmit(true);
   
     }
-
-    
-    
   };
 
   const validateCategory = (values) => {
@@ -333,10 +332,10 @@ function MedicineAdd() {
                         <option value="">Category</option>
 
 
-                        {categoryNameList.map((category) => (
+                        {categoryNameList.map((category,i) => (
                           <option
                             value={category.categoryName}
-                            key={category.categoryId}
+                            key={i}
                           >
                             {category.categoryName}
                           </option>
